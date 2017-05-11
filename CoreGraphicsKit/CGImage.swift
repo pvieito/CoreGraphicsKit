@@ -11,6 +11,10 @@ import CoreGraphics
 
 extension CGImage {
 
+    /// Cropping mode.
+    ///
+    /// - fill: Fill the given frame with the image.
+    /// - fit: Fit the image in the given frame.
     public enum CroppingMode {
         case fill
         case fit

@@ -11,6 +11,7 @@
 		AA1B47E61EC342C400E35BD0 /* CGScalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B47E51EC342C400E35BD0 /* CGScalable.swift */; };
 		AA1B47E81EC343F200E35BD0 /* CGRatioProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B47E71EC343F200E35BD0 /* CGRatioProvider.swift */; };
 		AA1B47EA1EC3445800E35BD0 /* CGRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B47E91EC3445800E35BD0 /* CGRatio.swift */; };
+		AA1B48361EC48C0800E35BD0 /* CommandLineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B48301EC48BEA00E35BD0 /* CommandLineKit.framework */; };
 		AA558AFB1EC28E6A0099A8B0 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AF81EC28E6A0099A8B0 /* CGColor.swift */; };
 		AA558AFC1EC28E6A0099A8B0 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AF91EC28E6A0099A8B0 /* CGImage.swift */; };
 		AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */; };
@@ -21,6 +22,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AA1B482F1EC48BEA00E35BD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06884319674D7D00BBFAAC;
+			remoteInfo = CommandLineKit;
+		};
+		AA1B48311EC48BEA00E35BD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06884E19674D7D00BBFAAC;
+			remoteInfo = CommandLineKitTests;
+		};
 		AA7D0E6D1EC29A1A005036CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */;
@@ -47,12 +62,14 @@
 		AA1B47E51EC342C400E35BD0 /* CGScalable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGScalable.swift; sourceTree = "<group>"; };
 		AA1B47E71EC343F200E35BD0 /* CGRatioProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRatioProvider.swift; sourceTree = "<group>"; };
 		AA1B47E91EC3445800E35BD0 /* CGRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRatio.swift; sourceTree = "<group>"; };
+		AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CommandLineKit.xcodeproj; path = ../CommandLineKit/CommandLineKit.xcodeproj; sourceTree = "<group>"; };
+		AA1B483B1EC4951000E35BD0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreGraphicsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA558AF11EC28E3F0099A8B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA558AF81EC28E6A0099A8B0 /* CGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		AA558AF91EC28E6A0099A8B0 /* CGImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
-		AA7D0E5D1EC299D9005036CE /* CoreGraphicsWindows */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CoreGraphicsWindows; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA7D0E5D1EC299D9005036CE /* CoreGraphicsTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CoreGraphicsTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7D0E641EC29A07005036CE /* CGWindowInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGWindowInformation.swift; sourceTree = "<group>"; };
 		AA7D0E651EC29A07005036CE /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoggerKit.xcodeproj; path = ../LoggerKit/LoggerKit.xcodeproj; sourceTree = "<group>"; };
@@ -70,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA1B48361EC48C0800E35BD0 /* CommandLineKit.framework in Frameworks */,
 				AA7D0E6F1EC29A1E005036CE /* LoggerKit.framework in Frameworks */,
 				AA7D0E681EC29A15005036CE /* CoreGraphicsKit.framework in Frameworks */,
 			);
@@ -78,12 +96,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA1B482B1EC48BEA00E35BD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA1B48301EC48BEA00E35BD0 /* CommandLineKit.framework */,
+				AA1B48321EC48BEA00E35BD0 /* CommandLineKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AA558AE31EC28E3F0099A8B0 = {
 			isa = PBXGroup;
 			children = (
+				AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */,
 				AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */,
 				AA558AEF1EC28E3F0099A8B0 /* CoreGraphicsKit */,
-				AA7D0E5E1EC299D9005036CE /* CoreGraphicsWindows */,
+				AA7D0E5E1EC299D9005036CE /* CoreGraphicsTool */,
 				AA558AEE1EC28E3F0099A8B0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,7 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */,
-				AA7D0E5D1EC299D9005036CE /* CoreGraphicsWindows */,
+				AA7D0E5D1EC299D9005036CE /* CoreGraphicsTool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,13 +140,14 @@
 			path = CoreGraphicsKit;
 			sourceTree = "<group>";
 		};
-		AA7D0E5E1EC299D9005036CE /* CoreGraphicsWindows */ = {
+		AA7D0E5E1EC299D9005036CE /* CoreGraphicsTool */ = {
 			isa = PBXGroup;
 			children = (
 				AA7D0E651EC29A07005036CE /* main.swift */,
 				AA7D0E641EC29A07005036CE /* CGWindowInformation.swift */,
+				AA1B483B1EC4951000E35BD0 /* Info.plist */,
 			);
-			path = CoreGraphicsWindows;
+			path = CoreGraphicsTool;
 			sourceTree = "<group>";
 		};
 		AA7D0E6A1EC29A1A005036CE /* Products */ = {
@@ -160,9 +189,9 @@
 			productReference = AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		AA7D0E5C1EC299D9005036CE /* CoreGraphicsWindows */ = {
+		AA7D0E5C1EC299D9005036CE /* CoreGraphicsTool */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA7D0E631EC299D9005036CE /* Build configuration list for PBXNativeTarget "CoreGraphicsWindows" */;
+			buildConfigurationList = AA7D0E631EC299D9005036CE /* Build configuration list for PBXNativeTarget "CoreGraphicsTool" */;
 			buildPhases = (
 				AA7D0E591EC299D9005036CE /* Sources */,
 				AA7D0E5A1EC299D9005036CE /* Frameworks */,
@@ -172,9 +201,9 @@
 			);
 			dependencies = (
 			);
-			name = CoreGraphicsWindows;
+			name = CoreGraphicsTool;
 			productName = CoreGraphicsWindows;
-			productReference = AA7D0E5D1EC299D9005036CE /* CoreGraphicsWindows */;
+			productReference = AA7D0E5D1EC299D9005036CE /* CoreGraphicsTool */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -213,6 +242,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = AA1B482B1EC48BEA00E35BD0 /* Products */;
+					ProjectRef = AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */;
+				},
+				{
 					ProductGroup = AA7D0E6A1EC29A1A005036CE /* Products */;
 					ProjectRef = AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */;
 				},
@@ -220,12 +253,26 @@
 			projectRoot = "";
 			targets = (
 				AA558AEC1EC28E3F0099A8B0 /* CoreGraphicsKit */,
-				AA7D0E5C1EC299D9005036CE /* CoreGraphicsWindows */,
+				AA7D0E5C1EC299D9005036CE /* CoreGraphicsTool */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		AA1B48301EC48BEA00E35BD0 /* CommandLineKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CommandLineKit.framework;
+			remoteRef = AA1B482F1EC48BEA00E35BD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AA1B48321EC48BEA00E35BD0 /* CommandLineKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CommandLineKitTests.xctest;
+			remoteRef = AA1B48311EC48BEA00E35BD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		AA7D0E6E1EC29A1A005036CE /* LoggerKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -420,8 +467,10 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = T7MC635YG5;
+				INFOPLIST_FILE = "$(SRCROOT)/CoreGraphicsWindows/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx";
 				LIBRARY_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.CoreGraphicsTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -433,8 +482,10 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = T7MC635YG5;
+				INFOPLIST_FILE = "$(SRCROOT)/CoreGraphicsWindows/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx";
 				LIBRARY_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.CoreGraphicsTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -461,7 +512,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA7D0E631EC299D9005036CE /* Build configuration list for PBXNativeTarget "CoreGraphicsWindows" */ = {
+		AA7D0E631EC299D9005036CE /* Build configuration list for PBXNativeTarget "CoreGraphicsTool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA7D0E611EC299D9005036CE /* Debug */,
