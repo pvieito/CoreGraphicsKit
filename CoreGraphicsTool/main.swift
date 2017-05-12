@@ -81,6 +81,7 @@ if !selectedWindows.isEmpty {
         let imageURL = temporaryDirectory.appendingPathComponent("CGWindows").appendingPathExtension("jpg")
         Logger.log(debug: "Ouput path: \(imageURL.path)")
         image?.write(to: imageURL)
+
         NSWorkspace.shared().open(imageURL)
     }
 }
