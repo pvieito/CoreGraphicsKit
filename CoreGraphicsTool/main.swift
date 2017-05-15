@@ -15,7 +15,7 @@ import Cocoa
 import CommandLineKit
 
 
-let matchOption = MultiStringOption(shortFlag: "m", longFlag: "match", helpMessage: "Name of process to inspect.")
+let matchOption = StringOption(shortFlag: "m", longFlag: "match", helpMessage: "Name of process to inspect.")
 let showOption = BoolOption(shortFlag: "s", longFlag: "show", helpMessage: "Shows a plot of the windows.")
 let verboseOption = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "Verbose Mode.")
 let helpOption = BoolOption(shortFlag: "h", longFlag: "help", helpMessage: "Prints a help message.")
@@ -54,37 +54,59 @@ context?.stroke(screenRect, width: 3.0)
 
 Logger.log(debug: "Listing Core Graphics Windows...")
 
-var selectedWindows = CGWindowInformation.systemWindows
+var inspectedApplications = CGTWorkspace.shared.systemApplications
 
-if let matchPatterns = matchOption.value {
-    selectedWindows = selectedWindows.filter({ matchPatterns.contains($0.ownerName) })
+if let matchPattern = matchOption.value {
+    inspectedApplications = inspectedApplications.filter({ $0.description.lowercased().contains(matchPattern.lowercased()) })
 }
 
-if !selectedWindows.isEmpty {
+inspectedApplications.sort(by: { $0.description < $1.description })
 
-    for window in selectedWindows {
-        Logger.log(important: "\(window.ownerName) (PID: \(window.ownerPID))")
-        Logger.log(info: "ID: \(window.id)")
-        Logger.log(info: "Name: \(window.name == "" ? "--" : window.name)")
+guard !inspectedApplications.isEmpty else {
+    Logger.log(error: "Match query does not match any Core Graphics window.")
+    exit(0)
+}
+
+
+for inspectedApplication in inspectedApplications {
+
+    Logger.log(important: "\(inspectedApplication.localizedName) (\(inspectedApplication.processIdentifier))")
+
+    if inspectedApplication.runningApplication == nil {
+        Logger.log(warning: "This process is not an application.")
+    }
+
+    if let bundleIdentifier = inspectedApplication.runningApplication?.bundleIdentifier {
+        Logger.log(info: "Bundle Identifier: \(bundleIdentifier)")
+    }
+
+    if let bundleURL = inspectedApplication.runningApplication?.bundleURL {
+        Logger.log(info: "Bundle: \(bundleURL.path)")
+    }
+
+    for window in inspectedApplication.windows {
+        Logger.log(success: "Window ID: \(window.id)")
+
+        if window.name != "" {
+            Logger.log(info: "Name: \(window.name)")
+        }
+
         Logger.log(info: "Bounds: \(window.bounds)")
 
         context?.setStrokeColor(CGColor.red)
         context?.stroke(window.bounds, width: 2.0)
     }
-
-    if showOption.value {
-        Logger.log(debug: "Showing windows plot...")
-
-        let image = context?.makeImage()
-        let temporaryDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("com.pvieito.CoreGraphicsTool")
-        try? FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true, attributes: nil)
-        let imageURL = temporaryDirectory.appendingPathComponent("CGWindows").appendingPathExtension("jpg")
-        Logger.log(debug: "Ouput path: \(imageURL.path)")
-        image?.write(to: imageURL)
-
-        NSWorkspace.shared().open(imageURL)
-    }
 }
-else {
-    Logger.log(error: "Match query does not match any Core Graphics window.")
+
+if showOption.value {
+    Logger.log(debug: "Showing windows plot...")
+
+    let image = context?.makeImage()
+    let temporaryDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("com.pvieito.CoreGraphicsTool")
+    try? FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true, attributes: nil)
+    let imageURL = temporaryDirectory.appendingPathComponent("CGWindows").appendingPathExtension("jpg")
+    Logger.log(debug: "Ouput path: \(imageURL.path)")
+    image?.write(to: imageURL)
+
+    NSWorkspace.shared().open(imageURL)
 }

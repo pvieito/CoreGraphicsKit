@@ -1,14 +1,14 @@
 //
-//  CGWindowInformation.swift
-//  WindowTool
+//  CGTWindow.swift
+//  CoreGraphicsKit
 //
-//  Created by Pedro José Pereira Vieito on 7/5/17.
+//  Created by Pedro José Pereira Vieito on 15/5/17.
 //  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
 //
 
 import Foundation
 
-class CGWindowInformation: CustomStringConvertible {
+class CGTWindow: CustomStringConvertible {
 
     let ownerPID: pid_t
     let ownerName: String
@@ -52,14 +52,5 @@ class CGWindowInformation: CustomStringConvertible {
 
     var description: String {
         return "\(self.ownerName) (PID: \(self.ownerPID)) Window \(self.id): \(self.name == "" ? "--" : self.name) - \(self.bounds)"
-    }
-
-    static var systemWindows: [CGWindowInformation] {
-
-        if let windows = CGWindowListCopyWindowInfo(CGWindowListOption.optionAll, kCGNullWindowID), let windowsDictionaries = windows as? [[String: Any]], let systemWindowsInfo = windowsDictionaries.map({ CGWindowInformation(info: $0) }).filter({ $0 != nil }) as? [CGWindowInformation] {
-            return systemWindowsInfo
-        }
-
-        return []
     }
 }
