@@ -23,10 +23,10 @@ class CGTApplication {
         return self.runningApplication?.processIdentifier ?? self.windows.first?.ownerPID ?? -1
     }
 
-    init(window: CGTWindow) {
+    init(windows: CGTWindow...) {
 
-        self.runningApplication = NSRunningApplication(processIdentifier: window.ownerPID)
-        self.windows.append(window)
+        self.runningApplication = NSRunningApplication(processIdentifier: windows.first!.ownerPID)
+        self.windows.append(contentsOf: windows)
     }
 
     var description: String {

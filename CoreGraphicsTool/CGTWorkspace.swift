@@ -21,7 +21,7 @@ class CGTWorkspace {
                 systemApplications[index].windows.append(window)
             }
             else {
-                let application = CGTApplication(window: window)
+                let application = CGTApplication(windows: window)
                 systemApplications.append(application)
             }
         }
