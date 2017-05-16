@@ -27,7 +27,7 @@ extension CGSize: CGScalable, CGRatioProvider, CustomStringConvertible {
 
     /// The ratio between the width and the height of the size.
     public var ratio: CGRatio {
-        return CGFloat(self.width / self.height)
+        return self.width / self.height
     }
 
     /// The biggest dimension of the size.

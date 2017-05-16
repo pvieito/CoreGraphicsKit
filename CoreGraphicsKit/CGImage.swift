@@ -45,7 +45,7 @@ extension CGImage {
 
     /// The ratio between the width and the height of the image.
     public var ratio: CGRatio {
-        return CGFloat(self.width / self.height)
+        return CGFloat(self.width) / CGFloat(self.height)
     }
 
     /// Crops the image with the given ratio.
