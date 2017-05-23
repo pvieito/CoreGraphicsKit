@@ -65,18 +65,61 @@ extension CGImage {
         }
     }
 
-    /// Writes image in a destiantion with the specified format.
+    /// Image file format.
+    public enum OuputFormat {
+        case jpeg
+        case png
+        case bmp
+
+        var utiType: CFString {
+            switch self {
+            case .jpeg:
+                return kUTTypeJPEG
+            case .png:
+                return kUTTypePNG
+            case .bmp:
+                return kUTTypeBMP
+            }
+        }
+
+        var pathExtension: String {
+            switch self {
+            case .jpeg:
+                return "jpg"
+            case .png:
+                return "png"
+            case .bmp:
+                return "bmp"
+            }
+        }
+    }
+
+    /// Writes the image in a destination with the specified format.
     ///
     /// - Parameters:
     ///   - url: Destiantion URL.
     ///   - format: Destination format. JPEG by default.
-    public func write(to url: URL, format: CFString = kUTTypeJPEG) {
+    public func write(to url: URL, format: OuputFormat = .jpeg) {
 
-        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, format, 1, nil) else {
+        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, format.utiType, 1, nil) else {
             return
         }
 
         CGImageDestinationAddImage(destination, self, nil)
         CGImageDestinationFinalize(destination)
+    }
+
+    /// Writes the image to a temporary location.
+    ///
+    /// Note: Use the `CGCache` `cleanCache()` method to clean the generated images from the temporary directory.
+    ///
+    /// - Parameters:
+    ///   - format: Destination format. JPEG by default.
+    public func temporaryFile(format: OuputFormat = .jpeg) throws -> URL {
+
+        let temporaryImageURL = try CGCache.generateTemporaryFileURL().appendingPathExtension(format.pathExtension)
+        self.write(to: temporaryImageURL, format: format)
+        
+        return temporaryImageURL
     }
 }

@@ -101,12 +101,16 @@ for inspectedApplication in inspectedApplications {
 if showOption.value {
     Logger.log(debug: "Showing windows plot...")
 
-    let image = context?.makeImage()
-    let temporaryDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("com.pvieito.CoreGraphicsTool")
-    try? FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true, attributes: nil)
-    let imageURL = temporaryDirectory.appendingPathComponent("CGWindows").appendingPathExtension("jpg")
-    Logger.log(debug: "Ouput path: \(imageURL.path)")
-    image?.write(to: imageURL)
-
-    NSWorkspace.shared().open(imageURL)
+    if let image = context?.makeImage() {
+        do {
+            let imageURL = try image.temporaryFile()
+            NSWorkspace.shared().open(imageURL)
+        }
+        catch {
+            Logger.log(error: error)
+        }
+    }
+    else {
+        Logger.log(error: "Context Image not available.")
+    }
 }
