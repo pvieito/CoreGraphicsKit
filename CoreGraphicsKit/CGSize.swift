@@ -22,7 +22,7 @@ extension CGSize: CGScalable, CGRatioProvider, CustomStringConvertible {
 
     /// Formatted description of the size.
     public var description: String {
-        return "\(Int(self.width)) × \(Int(self.height))"
+        return "\(self.width) × \(self.height)"
     }
 
     /// The ratio between the width and the height of the size.

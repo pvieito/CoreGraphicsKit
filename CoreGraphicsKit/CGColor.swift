@@ -9,13 +9,29 @@
 import Foundation
 import CoreGraphics
 
+#if !os(macOS)
+    import UIKit
+#endif
+
 extension CGColor {
+
+    #if !os(macOS)
+    public static func `init`(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
+
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha).cgColor
+    }
+
+    public static func `init`(gray: CGFloat, alpha: CGFloat) -> CGColor {
+
+        return UIColor(white: gray, alpha: alpha).cgColor
+    }
+    #endif
 
     /// Initializes a CGColor with an integer representing the alpha, red, green and blue channels.
     ///
     /// - Parameter argb: Integer with 8 bits per channels and alpha, red, green, blue channels order.
     /// - Returns: Initialized CGColor.
-    public static func `init`(argb: Int) -> CGColor? {
+    public static func `init`(argb: UInt32) -> CGColor? {
 
         guard argb >= 0 && argb <= 0xFFFFFFFF else {
             return nil
@@ -31,7 +47,7 @@ extension CGColor {
     ///
     /// - Parameter argb: Integer with 8 bits per channels and red, green, blue, alpha channels order.
     /// - Returns: Initialized CGColor.
-    public static func `init`(rgba: Int) -> CGColor? {
+    public static func `init`(rgba: UInt32) -> CGColor? {
 
         guard rgba >= 0 && rgba <= 0xFFFFFFFF else {
             return nil
@@ -69,7 +85,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(argb: colorInteger)
+        return CGColor.init(argb: UInt32(IntMax(colorInteger)))
     }
 
     /// Initializes a CGColor with an RGBA hexadecimal representation.
@@ -82,7 +98,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(rgba: colorInteger)
+        return CGColor.init(rgba: UInt32(IntMax(colorInteger)))
     }
 
     /// Initializes a CGColor with an RGB hexadecimal representation.
@@ -100,22 +116,22 @@ extension CGColor {
 
     /// Red color.
     public static var red: CGColor {
-        return CGColor(red: 1, green: 0, blue: 0, alpha: 1)
+        return CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
     }
 
     /// Green color.
     public static var green: CGColor {
-        return CGColor(red: 0, green: 1, blue: 0, alpha: 1)
+        return CGColor.init(red: 0, green: 1, blue: 0, alpha: 1)
     }
 
     /// Blue color.
     public static var blue: CGColor {
-        return CGColor(red: 0, green: 0, blue: 1, alpha: 1)
+        return CGColor.init(red: 0, green: 0, blue: 1, alpha: 1)
     }
 
     /// Gray color.
     public static var gray: CGColor {
-        return CGColor(gray: 0.5, alpha: 1)
+        return CGColor.init(gray: 0.5, alpha: 1)
     }
 }
 

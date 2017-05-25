@@ -9,6 +9,7 @@
 import Foundation
 import CoreGraphics
 
+#if os(macOS)
 extension CGImage {
 
     /// Cropping mode.
@@ -123,3 +124,4 @@ extension CGImage {
         return temporaryImageURL
     }
 }
+#endif

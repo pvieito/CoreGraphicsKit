@@ -452,6 +452,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.CoreGraphicsKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator watchos watchsimulator appletvos appletvsimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -476,6 +477,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.CoreGraphicsKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator watchos watchsimulator appletvos appletvsimulator";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

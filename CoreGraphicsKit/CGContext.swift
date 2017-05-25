@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import CoreGraphics
 
+#if os(macOS)
 extension CGContext {
 
     enum OutputError: LocalizedError {
@@ -37,3 +39,4 @@ extension CGContext {
         return try image.temporaryFile(format: format)
     }
 }
+#endif
