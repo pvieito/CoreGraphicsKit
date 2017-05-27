@@ -33,7 +33,7 @@ extension CGColor {
     /// - Returns: Initialized CGColor.
     public static func `init`(argb: UInt32) -> CGColor? {
 
-        guard argb >= 0 && argb <= 0xFFFFFFFF else {
+        guard argb >= 0 && argb <= 0xFFFFFFFF as UInt32 else {
             return nil
         }
 
@@ -49,7 +49,7 @@ extension CGColor {
     /// - Returns: Initialized CGColor.
     public static func `init`(rgba: UInt32) -> CGColor? {
 
-        guard rgba >= 0 && rgba <= 0xFFFFFFFF else {
+        guard rgba >= 0 && rgba <= 0xFFFFFFFF as UInt32 else {
             return nil
         }
 
@@ -85,7 +85,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(argb: UInt32(IntMax(colorInteger)))
+        return CGColor.init(argb: UInt32(colorInteger))
     }
 
     /// Initializes a CGColor with an RGBA hexadecimal representation.
@@ -98,7 +98,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(rgba: UInt32(IntMax(colorInteger)))
+        return CGColor.init(rgba: UInt32(colorInteger))
     }
 
     /// Initializes a CGColor with an RGB hexadecimal representation.
