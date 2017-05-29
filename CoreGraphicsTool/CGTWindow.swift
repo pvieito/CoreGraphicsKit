@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import CoreGraphics
 
 class CGTWindow: CustomStringConvertible {
 
     let ownerPID: pid_t
     let ownerName: String
 
-    let id: Int
+    let id: CGWindowID
     let bounds: CGRect
     let name: String
 
@@ -27,7 +28,7 @@ class CGTWindow: CustomStringConvertible {
             return nil
         }
 
-        guard let id = info[kCGWindowNumber as String] as? Int else {
+        guard let id = info[kCGWindowNumber as String] as? CGWindowID else {
             return nil
         }
 

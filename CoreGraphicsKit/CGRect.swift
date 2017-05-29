@@ -9,7 +9,23 @@
 import Foundation
 import CoreGraphics
 
-extension CGRect: CGScalable, CGRatioProvider {
+extension CGRect: CGRatioProvider {
+
+    /// The ratio between the width and the height of the size.
+    public var ratio: CGRatio {
+        return self.size.ratio
+    }
+}
+
+extension CGRect: CGAreaProvider {
+
+    /// Area of the CGRect.
+    public var area: CGFloat {
+        return self.size.width * self.size.height
+    }
+}
+
+extension CGRect: CGScalable {
 
     /// Return a rect with the size scaled by a floating point factor.
     ///
@@ -20,10 +36,5 @@ extension CGRect: CGScalable, CGRatioProvider {
         rect.size = self.size * scale
 
         return rect
-    }
-
-    /// The ratio between the width and the height of the size.
-    public var ratio: CGRatio {
-        return self.size.ratio
     }
 }

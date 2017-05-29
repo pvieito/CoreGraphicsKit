@@ -23,6 +23,7 @@
 		AA7D0E671EC29A07005036CE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7D0E651EC29A07005036CE /* main.swift */; };
 		AA7D0E681EC29A15005036CE /* CoreGraphicsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */; };
 		AA7D0E6F1EC29A1E005036CE /* LoggerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7D0E6E1EC29A1A005036CE /* LoggerKit.framework */; };
+		AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		AA7D0E641EC29A07005036CE /* CGTApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGTApplication.swift; sourceTree = "<group>"; };
 		AA7D0E651EC29A07005036CE /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoggerKit.xcodeproj; path = ../LoggerKit/LoggerKit.xcodeproj; sourceTree = "<group>"; };
+		AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAreaProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,9 +143,10 @@
 				AA558AF91EC28E6A0099A8B0 /* CGImage.swift */,
 				AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */,
 				AA1B47E21EC3411F00E35BD0 /* CGRect.swift */,
-				AA1B47E51EC342C400E35BD0 /* CGScalable.swift */,
 				AA1B47E91EC3445800E35BD0 /* CGRatio.swift */,
+				AA1B47E51EC342C400E35BD0 /* CGScalable.swift */,
 				AA1B47E71EC343F200E35BD0 /* CGRatioProvider.swift */,
+				AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */,
 				AA3BDBB31ECDC0EE0041E3E4 /* CGCache.swift */,
 				AA558AF11EC28E3F0099A8B0 /* Info.plist */,
 			);
@@ -316,6 +319,7 @@
 				AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */,
 				AA558AFC1EC28E6A0099A8B0 /* CGImage.swift in Sources */,
 				AA3BDBB41ECDC0EE0041E3E4 /* CGCache.swift in Sources */,
+				AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */,
 				AA1B47E61EC342C400E35BD0 /* CGScalable.swift in Sources */,
 				AA1B47E31EC3411F00E35BD0 /* CGRect.swift in Sources */,
 			);

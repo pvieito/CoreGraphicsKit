@@ -39,18 +39,18 @@ if helpOption.value {
 Logger.logMode = .commandLine
 Logger.logLevel = verboseOption.value ? .debug : .info
 
-let screenRect = NSScreen.main()!.frame
-let screenScale = NSScreen.main()!.backingScaleFactor
+guard let screenRect = NSScreen.main()?.frame, let screenScale = NSScreen.main()?.backingScaleFactor, let context = CGContext(data: nil, width: Int(screenRect.width) * 3, height: Int(screenRect.height) * 3, bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+    Logger.log(error: "Error loading Graphic Context.")
+    exit(-1)
+}
 
 Logger.log(info: "Screen resolution: \(screenRect.size) (\(Int(screenScale))x)")
 
-let context = CGContext(data: nil, width: Int(screenRect.width) * 3, height: Int(screenRect.height) * 3, bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+context.translateBy(x: screenRect.width, y: 2 * screenRect.height)
+context.scaleBy(x: 1, y: -1)
 
-context?.translateBy(x: screenRect.width, y: 2 * screenRect.height)
-context?.scaleBy(x: 1, y: -1)
-
-context?.setStrokeColor(CGColor.blue)
-context?.stroke(screenRect, width: 3.0)
+context.setStrokeColor(CGColor.blue)
+context.stroke(screenRect, width: 3.0)
 
 Logger.log(debug: "Listing Core Graphics Windows...")
 
@@ -67,6 +67,7 @@ guard !inspectedApplications.isEmpty else {
     exit(0)
 }
 
+var matchedWindows: [CGTWindow] = []
 
 for inspectedApplication in inspectedApplications {
 
@@ -84,7 +85,9 @@ for inspectedApplication in inspectedApplications {
         Logger.log(info: "Bundle: \(bundleURL.path)")
     }
 
-    for window in inspectedApplication.windows {
+    let windows = inspectedApplication.windows.sorted(by: { $0.bounds.area > $1.bounds.area })
+
+    for window in windows {
         Logger.log(success: "Window ID: \(window.id)")
 
         if window.name != "" {
@@ -92,16 +95,28 @@ for inspectedApplication in inspectedApplications {
         }
 
         Logger.log(info: "Bounds: \(window.bounds)")
-
-        context?.setStrokeColor(CGColor.red)
-        context?.stroke(window.bounds, width: 2.0)
     }
+
+    matchedWindows.append(contentsOf: windows)
 }
 
 if showOption.value {
     Logger.log(debug: "Showing windows plot...")
 
-    if let image = context?.makeImage() {
+    for window in matchedWindows.sorted(by: { $0.bounds.area > $1.bounds.area }) {
+
+        if let image = CGWindowListCreateImage(window.bounds, [.optionIncludingWindow], window.id, [.bestResolution]) {
+            let cocoaImage = NSImage(cgImage: image, size: .zero)
+            let graphicsContext = NSGraphicsContext(cgContext: context, flipped: true)
+            NSGraphicsContext.setCurrent(graphicsContext)
+            cocoaImage.draw(in: window.bounds)
+        }
+
+        context.setStrokeColor(CGColor.red)
+        context.stroke(window.bounds, width: 2.0)
+    }
+
+    if let image = context.makeImage() {
         do {
             let imageURL = try image.temporaryFile()
             NSWorkspace.shared().open(imageURL)

@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-extension CGSize: CGScalable, CGRatioProvider, CustomStringConvertible {
+extension CGSize {
 
     /// Initializes a CGSize with a given ratio and width.
     ///
@@ -18,16 +18,6 @@ extension CGSize: CGScalable, CGRatioProvider, CustomStringConvertible {
     ///   - width: Width of the size.
     public init(ratio: CGRatio, width: CGFloat) {
         self.init(width: width, height: width / ratio)
-    }
-
-    /// Formatted description of the size.
-    public var description: String {
-        return "\(self.width) × \(self.height)"
-    }
-
-    /// The ratio between the width and the height of the size.
-    public var ratio: CGRatio {
-        return self.width / self.height
     }
 
     /// The biggest dimension of the size.
@@ -50,14 +40,6 @@ extension CGSize: CGScalable, CGRatioProvider, CustomStringConvertible {
         return CGSize(width: self.max, height: self.min)
     }
 
-    /// Return the size scaled by a floating point factor.
-    ///
-    /// - Parameter scale: Scale factor.
-    /// - Returns: Size scaled.
-    public func scaled(by scale: CGFloat) -> CGSize {
-        return self * scale
-    }
-
     /// The size scaled by a floating point factor.
     static func * (size: CGSize, factor: CGFloat) -> CGSize {
         return CGSize(width: CGFloat(size.width) * factor, height: CGFloat(size.height) * factor)
@@ -66,5 +48,40 @@ extension CGSize: CGScalable, CGRatioProvider, CustomStringConvertible {
     /// The size scaled by a floating point factor.
     static func * (factor: CGFloat, size: CGSize) -> CGSize {
         return size * factor
+    }
+}
+
+extension CGSize: CGRatioProvider {
+
+    /// The ratio between the width and the height of the size.
+    public var ratio: CGRatio {
+        return self.width / self.height
+    }
+}
+
+extension CGSize: CGAreaProvider {
+
+    /// Area of the size.
+    public var area: CGFloat {
+        return self.width * self.height
+    }
+}
+
+extension CGSize: CGScalable {
+    
+    /// Return the size scaled by a floating point factor.
+    ///
+    /// - Parameter scale: Scale factor.
+    /// - Returns: Size scaled.
+    public func scaled(by scale: CGFloat) -> CGSize {
+        return self * scale
+    }
+}
+
+extension CGSize: CustomStringConvertible {
+
+    /// Formatted description of the size.
+    public var description: String {
+        return "\(self.width) × \(self.height)"
     }
 }
