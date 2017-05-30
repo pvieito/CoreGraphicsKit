@@ -31,8 +31,8 @@ class CGTWorkspace {
 
     var systemWindows: [CGTWindow] {
 
-        if let windows = CGWindowListCopyWindowInfo(CGWindowListOption.optionAll, kCGNullWindowID), let windowsDictionaries = windows as? [[String: Any]], let systemWindowsInfo = windowsDictionaries.map({ CGTWindow(info: $0) }).filter({ $0 != nil }) as? [CGTWindow] {
-            return systemWindowsInfo
+        if let windows = CGWindowListCopyWindowInfo(CGWindowListOption.optionAll, kCGNullWindowID), let windowsDictionaries = windows as? [[String: Any]] {
+            return windowsDictionaries.flatMap({ CGTWindow(info: $0) })
         }
 
         return []
