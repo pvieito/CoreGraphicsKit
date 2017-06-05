@@ -17,7 +17,7 @@ import CommandLineKit
 
 let matchOption = StringOption(shortFlag: "m", longFlag: "match", helpMessage: "Name of process to inspect.")
 let showOption = BoolOption(shortFlag: "s", longFlag: "show", helpMessage: "Shows a plot of the windows.")
-let verboseOption = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "Verbose Mode.")
+let verboseOption = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "Verbose mode.")
 let helpOption = BoolOption(shortFlag: "h", longFlag: "help", helpMessage: "Prints a help message.")
 
 let cli = CommandLineKit.CommandLine()
