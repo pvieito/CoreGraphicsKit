@@ -39,7 +39,7 @@ if helpOption.value {
 Logger.logMode = .commandLine
 Logger.logLevel = verboseOption.value ? .debug : .info
 
-guard let screenRect = NSScreen.main()?.frame, let screenScale = NSScreen.main()?.backingScaleFactor, let context = CGContext(data: nil, width: Int(screenRect.width) * 3, height: Int(screenRect.height) * 3, bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+guard let screenRect = NSScreen.main?.frame, let screenScale = NSScreen.main?.backingScaleFactor, let context = CGContext(data: nil, width: Int(screenRect.width) * 3, height: Int(screenRect.height) * 3, bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
     Logger.log(error: "Error loading Graphic Context.")
     exit(-1)
 }
@@ -108,7 +108,7 @@ if showOption.value {
         if let image = CGWindowListCreateImage(window.bounds, [.optionIncludingWindow], window.id, [.bestResolution]) {
             let cocoaImage = NSImage(cgImage: image, size: .zero)
             let graphicsContext = NSGraphicsContext(cgContext: context, flipped: true)
-            NSGraphicsContext.setCurrent(graphicsContext)
+            NSGraphicsContext.current = graphicsContext
             cocoaImage.draw(in: window.bounds)
         }
 
@@ -119,7 +119,7 @@ if showOption.value {
     if let image = context.makeImage() {
         do {
             let imageURL = try image.temporaryFile()
-            NSWorkspace.shared().open(imageURL)
+            NSWorkspace.shared.open(imageURL)
         }
         catch {
             Logger.log(error: error)
