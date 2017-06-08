@@ -11,18 +11,11 @@
 		AA1B47E61EC342C400E35BD0 /* CGScalable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B47E51EC342C400E35BD0 /* CGScalable.swift */; };
 		AA1B47E81EC343F200E35BD0 /* CGRatioProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B47E71EC343F200E35BD0 /* CGRatioProvider.swift */; };
 		AA1B47EA1EC3445800E35BD0 /* CGRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1B47E91EC3445800E35BD0 /* CGRatio.swift */; };
-		AA1B48361EC48C0800E35BD0 /* CommandLineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1B48301EC48BEA00E35BD0 /* CommandLineKit.framework */; };
-		AA3207D91ECA19BD00E56E4A /* CGTWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3207D81ECA19BD00E56E4A /* CGTWindow.swift */; };
-		AA3207DE1ECA1AB100E56E4A /* CGTWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3207DD1ECA1AB100E56E4A /* CGTWorkspace.swift */; };
 		AA3BDBAF1ECDB5E50041E3E4 /* CGContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3BDBAE1ECDB5E50041E3E4 /* CGContext.swift */; };
 		AA3BDBB41ECDC0EE0041E3E4 /* CGCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3BDBB31ECDC0EE0041E3E4 /* CGCache.swift */; };
 		AA558AFB1EC28E6A0099A8B0 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AF81EC28E6A0099A8B0 /* CGColor.swift */; };
 		AA558AFC1EC28E6A0099A8B0 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AF91EC28E6A0099A8B0 /* CGImage.swift */; };
 		AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */; };
-		AA7D0E661EC29A07005036CE /* CGTApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7D0E641EC29A07005036CE /* CGTApplication.swift */; };
-		AA7D0E671EC29A07005036CE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7D0E651EC29A07005036CE /* main.swift */; };
-		AA7D0E681EC29A15005036CE /* CoreGraphicsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */; };
-		AA7D0E6F1EC29A1E005036CE /* LoggerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA7D0E6E1EC29A1A005036CE /* LoggerKit.framework */; };
 		AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,27 +36,12 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		AA7D0E5B1EC299D9005036CE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		AA1B47E21EC3411F00E35BD0 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		AA1B47E51EC342C400E35BD0 /* CGScalable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGScalable.swift; sourceTree = "<group>"; };
 		AA1B47E71EC343F200E35BD0 /* CGRatioProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRatioProvider.swift; sourceTree = "<group>"; };
 		AA1B47E91EC3445800E35BD0 /* CGRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRatio.swift; sourceTree = "<group>"; };
 		AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CommandLineKit.xcodeproj; path = ../CommandLineKit/CommandLineKit.xcodeproj; sourceTree = "<group>"; };
-		AA1B483B1EC4951000E35BD0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA3207D81ECA19BD00E56E4A /* CGTWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGTWindow.swift; sourceTree = "<group>"; };
-		AA3207DD1ECA1AB100E56E4A /* CGTWorkspace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGTWorkspace.swift; sourceTree = "<group>"; };
 		AA3BDBAE1ECDB5E50041E3E4 /* CGContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContext.swift; sourceTree = "<group>"; };
 		AA3BDBB31ECDC0EE0041E3E4 /* CGCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGCache.swift; sourceTree = "<group>"; };
 		AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreGraphicsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,9 +49,6 @@
 		AA558AF81EC28E6A0099A8B0 /* CGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		AA558AF91EC28E6A0099A8B0 /* CGImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
-		AA7D0E5D1EC299D9005036CE /* CoreGraphicsTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CoreGraphicsTool; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA7D0E641EC29A07005036CE /* CGTApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGTApplication.swift; sourceTree = "<group>"; };
-		AA7D0E651EC29A07005036CE /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoggerKit.xcodeproj; path = ../LoggerKit/LoggerKit.xcodeproj; sourceTree = "<group>"; };
 		AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAreaProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,16 +58,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AA7D0E5A1EC299D9005036CE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA1B48361EC48C0800E35BD0 /* CommandLineKit.framework in Frameworks */,
-				AA7D0E6F1EC29A1E005036CE /* LoggerKit.framework in Frameworks */,
-				AA7D0E681EC29A15005036CE /* CoreGraphicsKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +78,6 @@
 				AA1B482A1EC48BEA00E35BD0 /* CommandLineKit.xcodeproj */,
 				AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */,
 				AA558AEF1EC28E3F0099A8B0 /* CoreGraphicsKit */,
-				AA7D0E5E1EC299D9005036CE /* CoreGraphicsTool */,
 				AA558AEE1EC28E3F0099A8B0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -122,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */,
-				AA7D0E5D1EC299D9005036CE /* CoreGraphicsTool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,18 +106,6 @@
 				AA558AF11EC28E3F0099A8B0 /* Info.plist */,
 			);
 			path = CoreGraphicsKit;
-			sourceTree = "<group>";
-		};
-		AA7D0E5E1EC299D9005036CE /* CoreGraphicsTool */ = {
-			isa = PBXGroup;
-			children = (
-				AA7D0E651EC29A07005036CE /* main.swift */,
-				AA3207DD1ECA1AB100E56E4A /* CGTWorkspace.swift */,
-				AA7D0E641EC29A07005036CE /* CGTApplication.swift */,
-				AA3207D81ECA19BD00E56E4A /* CGTWindow.swift */,
-				AA1B483B1EC4951000E35BD0 /* Info.plist */,
-			);
-			path = CoreGraphicsTool;
 			sourceTree = "<group>";
 		};
 		AA7D0E6A1EC29A1A005036CE /* Products */ = {
@@ -196,23 +147,6 @@
 			productReference = AA558AED1EC28E3F0099A8B0 /* CoreGraphicsKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		AA7D0E5C1EC299D9005036CE /* CoreGraphicsTool */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AA7D0E631EC299D9005036CE /* Build configuration list for PBXNativeTarget "CoreGraphicsTool" */;
-			buildPhases = (
-				AA7D0E591EC299D9005036CE /* Sources */,
-				AA7D0E5A1EC299D9005036CE /* Frameworks */,
-				AA7D0E5B1EC299D9005036CE /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CoreGraphicsTool;
-			productName = CoreGraphicsWindows;
-			productReference = AA7D0E5D1EC299D9005036CE /* CoreGraphicsTool */;
-			productType = "com.apple.product-type.tool";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -224,12 +158,6 @@
 				ORGANIZATIONNAME = "Pedro José Pereira Vieito";
 				TargetAttributes = {
 					AA558AEC1EC28E3F0099A8B0 = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = T7MC635YG5;
-						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
-					};
-					AA7D0E5C1EC299D9005036CE = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = T7MC635YG5;
 						LastSwiftMigration = 0900;
@@ -260,7 +188,6 @@
 			projectRoot = "";
 			targets = (
 				AA558AEC1EC28E3F0099A8B0 /* CoreGraphicsKit */,
-				AA7D0E5C1EC299D9005036CE /* CoreGraphicsTool */,
 			);
 		};
 /* End PBXProject section */
@@ -307,17 +234,6 @@
 				AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */,
 				AA1B47E61EC342C400E35BD0 /* CGScalable.swift in Sources */,
 				AA1B47E31EC3411F00E35BD0 /* CGRect.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AA7D0E591EC299D9005036CE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA7D0E671EC29A07005036CE /* main.swift in Sources */,
-				AA3207D91ECA19BD00E56E4A /* CGTWindow.swift in Sources */,
-				AA3207DE1ECA1AB100E56E4A /* CGTWorkspace.swift in Sources */,
-				AA7D0E661EC29A07005036CE /* CGTApplication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,35 +401,6 @@
 			};
 			name = Release;
 		};
-		AA7D0E611EC299D9005036CE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = T7MC635YG5;
-				INFOPLIST_FILE = CoreGraphicsTool/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx";
-				LIBRARY_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.CoreGraphicsTool;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		AA7D0E621EC299D9005036CE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = T7MC635YG5;
-				INFOPLIST_FILE = CoreGraphicsTool/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx";
-				LIBRARY_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.CoreGraphicsTool;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -531,15 +418,6 @@
 			buildConfigurations = (
 				AA558AF61EC28E3F0099A8B0 /* Debug */,
 				AA558AF71EC28E3F0099A8B0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AA7D0E631EC299D9005036CE /* Build configuration list for PBXNativeTarget "CoreGraphicsTool" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AA7D0E611EC299D9005036CE /* Debug */,
-				AA7D0E621EC299D9005036CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
