@@ -9,6 +9,8 @@
 import Foundation
 import CoreGraphics
 
+extension CGRect: CGSizeProvider { }
+
 extension CGRect: CGRatioProvider {
 
     /// The ratio between the width and the height of the size.

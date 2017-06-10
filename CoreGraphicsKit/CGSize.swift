@@ -51,6 +51,14 @@ extension CGSize {
     }
 }
 
+extension CGSize: CGSizeProvider {
+    
+    /// Basic CGSizeProvider implementation.
+    public var size: CGSize {
+        return self
+    }
+}
+
 extension CGSize: CGRatioProvider {
 
     /// The ratio between the width and the height of the size.
