@@ -116,22 +116,22 @@ extension CGColor {
 
     /// Red color.
     public static var red: CGColor {
-        return CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+        return #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     }
 
     /// Green color.
     public static var green: CGColor {
-        return CGColor.init(red: 0, green: 1, blue: 0, alpha: 1)
+        return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
     }
 
     /// Blue color.
     public static var blue: CGColor {
-        return CGColor.init(red: 0, green: 0, blue: 1, alpha: 1)
+        return #colorLiteral(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
     }
 
     /// Gray color.
     public static var gray: CGColor {
-        return CGColor.init(gray: 0.5, alpha: 1)
+        return #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
     }
 }
 
