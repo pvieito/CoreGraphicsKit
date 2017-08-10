@@ -138,7 +138,7 @@ extension CGColor {
 extension String {
 
     internal var hexadecimalColorInteger: Int? {
-        let hexadecimalColorString = self.hasPrefix("#") ? self.substring(from: self.index(self.startIndex, offsetBy: 1)) : self
+        let hexadecimalColorString = self.hasPrefix("#") ? String(self.suffix(from: self.index(self.startIndex, offsetBy: 1))) : self
 
         return Int(hexadecimalColorString, radix: 16)
     }
