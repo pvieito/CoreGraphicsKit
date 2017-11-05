@@ -125,16 +125,28 @@ extension CGImage {
     /// Writes the image in a destination with the specified format.
     ///
     /// - Parameters:
-    ///   - url: Destiantion URL.
+    ///   - url: Destination URL.
     ///   - format: Destination format. JPEG by default.
-    public func write(to url: URL, format: OuputFormat = .jpeg) {
+    public func write(to url: URL, format: OuputFormat = .jpeg) throws {
+        try self.write(to: url, format: format.utiType)
+    }
+    
+    /// Writes the image in a destination with the specified format.
+    ///
+    /// - Parameters:
+    ///   - url: Destination URL.
+    ///   - format: Destination UTI type.
+    public func write(to url: URL, format: CFString) throws {
         
-        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, format.utiType, 1, nil) else {
-            return
+        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, format, 1, nil) else {
+            throw CGError.OutputError.destinationTypeNotSupported
         }
         
         CGImageDestinationAddImage(destination, self, nil)
-        CGImageDestinationFinalize(destination)
+        
+        guard CGImageDestinationFinalize(destination) else {
+            throw CGError.OutputError.errorWrittingOutput
+        }
     }
     
     /// Writes the image to a temporary location.
@@ -146,7 +158,7 @@ extension CGImage {
     public func temporaryFile(format: OuputFormat = .jpeg) throws -> URL {
         
         let temporaryImageURL = try CGCache.generateTemporaryFileURL().appendingPathExtension(format.pathExtension)
-        self.write(to: temporaryImageURL, format: format)
+        try self.write(to: temporaryImageURL, format: format)
         
         return temporaryImageURL
     }

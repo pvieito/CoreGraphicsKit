@@ -18,6 +18,7 @@
 		AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */; };
 		AA75B20F1EEC2E0D00784B55 /* CGSizeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA75B20E1EEC2E0D00784B55 /* CGSizeProvider.swift */; };
 		AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */; };
+		AAECCAB41F643C91001EC33F /* CGError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAECCAB31F643C91001EC33F /* CGError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		AA75B20E1EEC2E0D00784B55 /* CGSizeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSizeProvider.swift; sourceTree = "<group>"; };
 		AA7D0E691EC29A1A005036CE /* LoggerKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LoggerKit.xcodeproj; path = ../LoggerKit/LoggerKit.xcodeproj; sourceTree = "<group>"; };
 		AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAreaProvider.swift; sourceTree = "<group>"; };
+		AAECCAB31F643C91001EC33F /* CGError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				AA558AF81EC28E6A0099A8B0 /* CGColor.swift */,
 				AA3BDBAE1ECDB5E50041E3E4 /* CGContext.swift */,
+				AAECCAB31F643C91001EC33F /* CGError.swift */,
 				AA558AF91EC28E6A0099A8B0 /* CGImage.swift */,
 				AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */,
 				AA1B47E21EC3411F00E35BD0 /* CGRect.swift */,
@@ -246,6 +249,7 @@
 				AA3BDBAF1ECDB5E50041E3E4 /* CGContext.swift in Sources */,
 				AA1B47E81EC343F200E35BD0 /* CGRatioProvider.swift in Sources */,
 				AA558AFB1EC28E6A0099A8B0 /* CGColor.swift in Sources */,
+				AAECCAB41F643C91001EC33F /* CGError.swift in Sources */,
 				AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */,
 				AA558AFC1EC28E6A0099A8B0 /* CGImage.swift in Sources */,
 				AA3BDBB41ECDC0EE0041E3E4 /* CGCache.swift in Sources */,

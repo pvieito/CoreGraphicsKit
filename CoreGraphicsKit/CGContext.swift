@@ -11,18 +11,6 @@ import CoreGraphics
 
 extension CGContext {
 
-    enum OutputError: LocalizedError {
-        case imageNotGenerated
-
-        var errorDescription: String? {
-
-            switch self {
-            case .imageNotGenerated:
-                return "The image of the CGContext did not render successfully."
-            }
-        }
-    }
-
     /// Draws the context in a temporary image file.
     ///
     /// Note: Use the `CGCache` `cleanCache()` method to clean the generated images from the temporary directory.
@@ -32,7 +20,7 @@ extension CGContext {
     public func temporaryImageFile(format: CGImage.OuputFormat = .jpeg) throws -> URL {
 
         guard let image = self.makeImage() else {
-            throw OutputError.imageNotGenerated
+            throw CGError.OutputError.imageNotGenerated
         }
 
         return try image.temporaryFile(format: format)
