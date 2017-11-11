@@ -19,6 +19,30 @@ extension CGSize {
     public init(ratio: CGRatio, width: CGFloat) {
         self.init(width: width, height: width / ratio)
     }
+    
+    /// Initializes a CGSize with a given ratio and height.
+    ///
+    /// - Parameters:
+    ///   - ratio: Ratio of the size.
+    ///   - height: Height of the size.
+    public init(ratio: CGRatio, height: CGFloat) {
+        self.init(width: height * ratio, height: height)
+    }
+    
+    /// Initializes a CGSize with a given ratio and a bounding box where it should fit.
+    ///
+    /// - Parameters:
+    ///   - ratio: Ratio of the size.
+    ///   - boundingBox: Bounding box size where it should fit.
+    public init(ratio: CGRatio, boundingBoxSize: CGSize) {
+        
+        if ratio < boundingBoxSize.ratio {
+            self.init(ratio: ratio, height: boundingBoxSize.height)
+        }
+        else {
+            self.init(ratio: ratio, width: boundingBoxSize.width)
+        }
+    }
 
     /// The biggest dimension of the size.
     public var max: CGFloat {
@@ -30,14 +54,24 @@ extension CGSize {
         return [self.width, self.height].min() ?? self.height
     }
 
-    /// Size in portrait mode (withe the height bigger than the width)
+    /// Size in portrait mode (height bigger than the width)
     public var portrait: CGSize {
         return CGSize(width: self.min, height: self.max)
     }
 
-    /// Size in landscape mode (withe the width bigger than the height)
+    /// Size in landscape mode (width bigger than the height)
     public var landscape: CGSize {
         return CGSize(width: self.max, height: self.min)
+    }
+    
+    /// True if height greater than width.
+    public var isPortrait: Bool {
+        return self.height > self.width
+    }
+    
+    /// True if width greater or equal than height.
+    public var isLandscape: Bool {
+        return self.width >= self.height
     }
 
     /// The size scaled by a floating point factor.

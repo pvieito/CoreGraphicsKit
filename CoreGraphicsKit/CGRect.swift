@@ -9,6 +9,23 @@
 import Foundation
 import CoreGraphics
 
+extension CGRect {
+    
+    /// Initializes a CGRect with a given size box centered on a bouding box.
+    ///
+    /// - Parameters:
+    ///   - centeredSize: Size of the new CGRect.
+    ///   - boundingBox: Bounding box size where it should be centered.
+    public init(size: CGSize, centeredOn boundingBox: CGRect) {
+        
+        let x = boundingBox.width / 2 + boundingBox.origin.x - size.width / 2
+        let y = boundingBox.height / 2 + boundingBox.origin.y - size.height / 2
+        let rectOrigin = CGPoint(x: x, y: y)
+        
+        self.init(origin: rectOrigin, size: size)
+    }
+}
+
 extension CGRect: CGSizeProvider { }
 
 extension CGRect: CGRatioProvider {
