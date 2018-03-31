@@ -9,24 +9,24 @@
 import Foundation
 import CoreGraphics
 
-#if !os(macOS)
+#if !os(macOS) && canImport(UIKit)
     import UIKit
 #endif
 
 extension CGColor {
 
-    #if !os(macOS)
+    #if !os(macOS) && canImport(UIKit)
     public static func `init`(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
 
         return UIColor(red: red, green: green, blue: blue, alpha: alpha).cgColor
     }
 
     public static func `init`(gray: CGFloat, alpha: CGFloat) -> CGColor {
-
+        
         return UIColor(white: gray, alpha: alpha).cgColor
     }
     #endif
-
+    
     /// Initializes a CGColor with an integer representing the alpha, red, green and blue channels.
     ///
     /// - Parameter argb: Integer with 8 bits per channels and alpha, red, green, blue channels order.
@@ -133,6 +133,13 @@ extension CGColor {
     public static var gray: CGColor {
         return #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
     }
+    
+    #if !os(macOS)
+    /// Black color.
+    public static var black: CGColor {
+        return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    }
+    #endif
 }
 
 extension String {
