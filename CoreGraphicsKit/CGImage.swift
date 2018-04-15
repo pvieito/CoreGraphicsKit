@@ -7,10 +7,15 @@
 //
 
 import Foundation
+import FoundationKit
 import CoreGraphics
 import ImageIO
 
-#if !os(macOS)
+#if canImport(Cocoa)
+import Cocoa
+#endif
+
+#if canImport(MobileCoreServices)
     import MobileCoreServices
 #endif
 
@@ -137,9 +142,8 @@ extension CGImage {
     ///   - url: Destination URL.
     ///   - format: Destination UTI type.
     public func write(to url: URL, format: CFString) throws {
-        
         guard let destination = CGImageDestinationCreateWithURL(url as CFURL, format, 1, nil) else {
-            throw CGError.OutputError.destinationTypeNotSupported
+            throw CGError.OutputError.destinationNotAvailable
         }
         
         CGImageDestinationAddImage(destination, self, nil)
@@ -151,16 +155,30 @@ extension CGImage {
     
     /// Writes the image to a temporary location.
     ///
-    /// Note: Use the `CGCache` `cleanCache()` method to clean the generated images from the temporary directory.
+    /// Note: Uses the FoundationKit `FileManger.autocleanedTemporaryDirectory` to temporary store the generated image.
     ///
     /// - Parameters:
     ///   - format: Destination format. JPEG by default.
     public func temporaryFile(format: OuputFormat = .jpeg) throws -> URL {
         
-        let temporaryImageURL = try CGCache.generateTemporaryFileURL().appendingPathExtension(format.pathExtension)
+        let imageUUID = UUID()
+        let temporaryImageURL = FileManager.default.autocleanedTemporaryDirectory
+            .appendingPathComponent(imageUUID.uuidString)
+            .appendingPathExtension(format.pathExtension)
         try self.write(to: temporaryImageURL, format: format)
         
         return temporaryImageURL
     }
+    
+    #if canImport(Cocoa)
+    /// Renders the image to a temporary location and and opens it.
+    ///
+    /// - Parameters:
+    ///   - format: Destination format. JPEG by default.
+    public func open(format: OuputFormat = .jpeg) throws {
+        let temporaryFile = try self.temporaryFile()
+        NSWorkspace.shared.open(temporaryFile)
+    }
+    #endif
 }
 
