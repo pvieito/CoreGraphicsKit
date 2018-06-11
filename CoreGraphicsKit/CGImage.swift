@@ -10,13 +10,10 @@ import Foundation
 import FoundationKit
 import CoreGraphics
 import ImageIO
+import CoreServices
 
 #if canImport(Cocoa)
 import Cocoa
-#endif
-
-#if canImport(MobileCoreServices)
-    import MobileCoreServices
 #endif
 
 extension CGImage {
