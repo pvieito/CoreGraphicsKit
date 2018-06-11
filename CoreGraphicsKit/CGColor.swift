@@ -79,7 +79,7 @@ extension CGColor {
     ///
     /// - Parameter hexARGB: ARGB hexadecimal representation, `#FF000000` or `FF000000`.
     /// - Returns: Initialized CGColor.
-    public static func `init`(hexARGB: String) -> CGColor? {
+    public static func cgColor(hexARGB: String) -> CGColor? {
 
         guard let colorInteger = hexARGB.hexadecimalColorInteger else {
             return nil
@@ -92,7 +92,7 @@ extension CGColor {
     ///
     /// - Parameter hexRGBA: RGBA hexadecimal representation, `#000000FF` or `000000FF`.
     /// - Returns: Initialized CGColor.
-    public static func `init`(hexRGBA: String) -> CGColor? {
+    public static func cgColor(hexRGBA: String) -> CGColor? {
 
         guard let colorInteger = hexRGBA.hexadecimalColorInteger else {
             return nil
@@ -105,7 +105,7 @@ extension CGColor {
     ///
     /// - Parameter hexRGB: RGB hexadecimal representation, `#FFFFFF` or `FFFFFF`.
     /// - Returns: Initialized CGColor with alpha set to 1.
-    public static func `init`(hexRGB: String) -> CGColor? {
+    public static func cgColor(hexRGB: String) -> CGColor? {
 
         guard let colorInteger = hexRGB.hexadecimalColorInteger else {
             return nil

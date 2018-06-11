@@ -78,7 +78,7 @@ extension CGImage {
     ///   - url: URL of the image.
     ///   - croppingRatio: Cropping ratio for the resulting image.
     /// - Returns: Returns a CGImage filled with the input image with the specified ratio.
-    public static func `init`(url: URL, ratio: CGRatio, croppingMode: CroppingMode = .fill) -> CGImage? {
+    public static func cgImage(url: URL, ratio: CGRatio, croppingMode: CroppingMode = .fill) -> CGImage? {
         
         if !FileManager.default.isReadableFile(atPath: url.path) {
             return nil
