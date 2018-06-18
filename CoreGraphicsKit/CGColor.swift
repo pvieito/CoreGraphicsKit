@@ -33,7 +33,7 @@ extension CGColor {
     
     public static func cgColor(gray: CGFloat, alpha: CGFloat) -> CGColor {
         
-        return CGColor.init(white: gray, alpha: alpha)
+        return CGColor.init(gray: gray, alpha: alpha)
     }
     #endif
     
