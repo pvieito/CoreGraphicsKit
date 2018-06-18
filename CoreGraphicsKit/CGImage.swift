@@ -10,7 +10,12 @@ import Foundation
 import FoundationKit
 import CoreGraphics
 import ImageIO
+
+#if canImport(MobileCoreServices)
+import MobileCoreServices
+#elseif canImport(CoreServices)
 import CoreServices
+#endif
 
 #if canImport(Cocoa)
 import Cocoa

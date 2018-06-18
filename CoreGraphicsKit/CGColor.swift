@@ -16,14 +16,24 @@ import CoreGraphics
 extension CGColor {
 
     #if !os(macOS) && canImport(UIKit)
-    public static func `init`(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
+    public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
 
         return UIColor(red: red, green: green, blue: blue, alpha: alpha).cgColor
     }
 
-    public static func `init`(gray: CGFloat, alpha: CGFloat) -> CGColor {
+    public static func cgColor(gray: CGFloat, alpha: CGFloat) -> CGColor {
         
         return UIColor(white: gray, alpha: alpha).cgColor
+    }
+    #else
+    public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
+        
+        return CGColor.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    public static func cgColor(gray: CGFloat, alpha: CGFloat) -> CGColor {
+        
+        return CGColor.init(white: gray, alpha: alpha)
     }
     #endif
     
@@ -37,7 +47,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(red: CGFloat((argb >> 16) & 0xFF) / 255.0,
+        return CGColor.cgColor(red: CGFloat((argb >> 16) & 0xFF) / 255.0,
                             green: CGFloat((argb >> 8) & 0xFF) / 255.0,
                             blue: CGFloat((argb >> 0) & 0xFF) / 255.0,
                             alpha: CGFloat((argb >> 24) & 0xFF) / 255.0)
@@ -53,7 +63,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(red: CGFloat((rgba >> 24) & 0xFF) / 255.0,
+        return CGColor.cgColor(red: CGFloat((rgba >> 24) & 0xFF) / 255.0,
                   green: CGFloat((rgba >> 16) & 0xFF) / 255.0,
                   blue: CGFloat((rgba >> 8) & 0xFF) / 255.0,
                   alpha: CGFloat((rgba >> 0) & 0xFF) / 255.0)
@@ -69,7 +79,7 @@ extension CGColor {
             return nil
         }
 
-        return CGColor.init(red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
+        return CGColor.cgColor(red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
                             green: CGFloat((rgb >> 8) & 0xFF) / 255.0,
                             blue: CGFloat((rgb >> 0) & 0xFF) / 255.0,
                             alpha: 1)
