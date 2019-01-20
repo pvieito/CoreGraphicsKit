@@ -14,7 +14,6 @@ import CoreGraphics
 #endif
 
 extension CGColor {
-
     #if !os(macOS) && canImport(UIKit)
     public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
 
@@ -152,8 +151,37 @@ extension CGColor {
     #endif
 }
 
-extension String {
+extension CGColor {
+    public var redFraction: CGFloat {
+        return self.components![0]
+    }
+    
+    public var greenFraction: CGFloat {
+        return self.components![1]
+    }
+    
+    public var blueFraction: CGFloat {
+        return self.components![2]
+    }
+    
+    public var red: Int {
+        return Int(self.redFraction * 255)
+    }
+    
+    public var green: Int {
+        return Int(self.greenFraction * 255)
+    }
+    
+    public var blue: Int {
+        return Int(self.blueFraction * 255)
+    }
+    
+    public var cssColor: String {
+        return "rgb(\(self.red), \(self.green), \(self.blue))"
+    }
+}
 
+extension String {
     internal var hexadecimalColorInteger: Int? {
         let hexadecimalColorString = self.hasPrefix("#") ? String(self.suffix(from: self.index(self.startIndex, offsetBy: 1))) : self
 

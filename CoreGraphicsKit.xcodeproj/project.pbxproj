@@ -16,6 +16,7 @@
 		AA558AFC1EC28E6A0099A8B0 /* CGImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AF91EC28E6A0099A8B0 /* CGImage.swift */; };
 		AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */; };
 		AA75B20F1EEC2E0D00784B55 /* CGSizeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA75B20E1EEC2E0D00784B55 /* CGSizeProvider.swift */; };
+		AAAC2CB521F50B5600D0A633 /* CGImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAC2CB121F50B5600D0A633 /* CGImage+Color.swift */; };
 		AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */; };
 		AAECCAB41F643C91001EC33F /* CGError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAECCAB31F643C91001EC33F /* CGError.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		AA558AF91EC28E6A0099A8B0 /* CGImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGImage.swift; sourceTree = "<group>"; };
 		AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		AA75B20E1EEC2E0D00784B55 /* CGSizeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSizeProvider.swift; sourceTree = "<group>"; };
+		AAAC2CB121F50B5600D0A633 /* CGImage+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+Color.swift"; sourceTree = "<group>"; };
 		AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAreaProvider.swift; sourceTree = "<group>"; };
 		AAECCAB31F643C91001EC33F /* CGError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +115,7 @@
 				AA558AF81EC28E6A0099A8B0 /* CGColor.swift */,
 				AAECCAB31F643C91001EC33F /* CGError.swift */,
 				AA558AF91EC28E6A0099A8B0 /* CGImage.swift */,
+				AAAC2CB121F50B5600D0A633 /* CGImage+Color.swift */,
 				AA558AFA1EC28E6A0099A8B0 /* CGSize.swift */,
 				AA1B47E21EC3411F00E35BD0 /* CGRect.swift */,
 				AA1B47E91EC3445800E35BD0 /* CGRatio.swift */,
@@ -243,6 +246,7 @@
 				AA558AFD1EC28E6A0099A8B0 /* CGSize.swift in Sources */,
 				AA558AFC1EC28E6A0099A8B0 /* CGImage.swift in Sources */,
 				AA75B20F1EEC2E0D00784B55 /* CGSizeProvider.swift in Sources */,
+				AAAC2CB521F50B5600D0A633 /* CGImage+Color.swift in Sources */,
 				AABE49971EDC4DB60049A09C /* CGAreaProvider.swift in Sources */,
 				AA1B47E61EC342C400E35BD0 /* CGScalable.swift in Sources */,
 				AA1B47E31EC3411F00E35BD0 /* CGRect.swift in Sources */,
