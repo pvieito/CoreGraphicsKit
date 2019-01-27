@@ -186,7 +186,7 @@ private class MMCQ {
         }
         
         public func makeCGColor() -> CGColor {
-            return CGColor(
+            return CGColor.cgColor(
                 red: CGFloat(r) / CGFloat(255),
                 green: CGFloat(g) / CGFloat(255),
                 blue: CGFloat(b) / CGFloat(255),
