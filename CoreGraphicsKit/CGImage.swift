@@ -172,7 +172,7 @@ extension CGImage {
         return temporaryImageURL
     }
     
-    #if canImport(Cocoa)
+    #if canImport(Cocoa) && !targetEnvironment(UIKitForMac)
     /// Renders the image to a temporary location and and opens it.
     ///
     /// - Parameters:
