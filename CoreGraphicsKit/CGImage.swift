@@ -17,12 +17,7 @@ import MobileCoreServices
 import CoreServices
 #endif
 
-#if canImport(Cocoa)
-import Cocoa
-#endif
-
 extension CGImage {
-    
     /// Cropping mode.
     ///
     /// - fill: Fill the given frame with the image.
@@ -52,7 +47,6 @@ extension CGImage {
 
 
 extension CGImage: CGSizeProvider {
-    
     /// The size of the image.
     public var size: CGSize {
         return CGSize(width: self.width, height: self.height)
@@ -60,7 +54,6 @@ extension CGImage: CGSizeProvider {
 }
 
 extension CGImage: CGRatioProvider {
-    
     /// The ratio between the width and the height of the image.
     public var ratio: CGRatio {
         return CGFloat(self.width) / CGFloat(self.height)
@@ -68,7 +61,6 @@ extension CGImage: CGRatioProvider {
 }
 
 extension CGImage: CGAreaProvider {
-    
     /// The ratio between the width and the height of the image.
     public var area: CGFloat {
         return CGFloat(self.width) * CGFloat(self.height)
@@ -76,7 +68,6 @@ extension CGImage: CGAreaProvider {
 }
 
 extension CGImage {
-    
     /// Initializes a CGImage with a given url and a cropping ratio.
     ///
     /// - Parameters:
@@ -101,7 +92,7 @@ extension CGImage {
     }
     
     /// Image file format.
-    public enum OuputFormat {
+    public enum OutputFormat {
         case jpeg
         case png
         case bmp
@@ -117,7 +108,7 @@ extension CGImage {
             }
         }
         
-        var pathExtension: String {
+        public var pathExtension: String {
             switch self {
             case .jpeg:
                 return "jpg"
@@ -134,7 +125,7 @@ extension CGImage {
     /// - Parameters:
     ///   - url: Destination URL.
     ///   - format: Destination format. JPEG by default.
-    public func write(to url: URL, format: OuputFormat = .jpeg) throws {
+    public func write(to url: URL, format: OutputFormat = .jpeg) throws {
         try self.write(to: url, format: format.utiType)
     }
     
@@ -161,7 +152,7 @@ extension CGImage {
     ///
     /// - Parameters:
     ///   - format: Destination format. JPEG by default.
-    public func temporaryFile(format: OuputFormat = .jpeg) throws -> URL {
+    public func temporaryFile(format: OutputFormat = .jpeg) throws -> URL {
         
         let imageUUID = UUID()
         let temporaryImageURL = FileManager.default.autocleanedTemporaryDirectory
@@ -172,15 +163,16 @@ extension CGImage {
         return temporaryImageURL
     }
     
-    #if canImport(Cocoa) && !targetEnvironment(UIKitForMac)
+    @available(iOSApplicationExtension, unavailable)
+    @available(tvOSApplicationExtension, unavailable)
+    @available(watchOSApplicationExtension, unavailable)
+    @available(UIKitForMacApplicationExtension, unavailable)
     /// Renders the image to a temporary location and and opens it.
     ///
     /// - Parameters:
     ///   - format: Destination format. JPEG by default.
-    public func open(format: OuputFormat = .jpeg) throws {
+    public func open(format: OutputFormat = .jpeg) throws {
         let temporaryFile = try self.temporaryFile()
-        NSWorkspace.shared.open(temporaryFile)
+        try temporaryFile.open()
     }
-    #endif
 }
-
