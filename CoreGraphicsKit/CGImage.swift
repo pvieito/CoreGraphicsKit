@@ -166,7 +166,7 @@ extension CGImage {
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(watchOSApplicationExtension, unavailable)
-    @available(UIKitForMacApplicationExtension, unavailable)
+    @available(macCatalystApplicationExtension, unavailable)
     /// Renders the image to a temporary location and and opens it.
     ///
     /// - Parameters:
