@@ -68,23 +68,28 @@ extension CGImage: CGAreaProvider {
 }
 
 extension CGImage {
-    /// Initializes a CGImage with a given url and a cropping ratio.
+    /// Initializes a CGImage with a given URL.
+    ///
+    /// - Parameters:
+    ///   - url: URL of the image.
+    /// - Returns: Returns a CGImage filled with the input image.
+    public static func cgImage(url: URL) -> CGImage? {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
+            let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+            return nil
+        }
+        
+        return image
+    }
+    
+    /// Initializes a CGImage with a given URL and a cropping ratio.
     ///
     /// - Parameters:
     ///   - url: URL of the image.
     ///   - croppingRatio: Cropping ratio for the resulting image.
     /// - Returns: Returns a CGImage filled with the input image with the specified ratio.
     public static func cgImage(url: URL, ratio: CGRatio, croppingMode: CroppingMode = .fill) -> CGImage? {
-        
-        if !FileManager.default.isReadableFile(atPath: url.path) {
-            return nil
-        }
-        
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else {
-            return nil
-        }
-        
-        guard let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+        guard let image = CGImage.cgImage(url: url) else {
             return nil
         }
         
