@@ -86,7 +86,6 @@ extension CGColor {
     /// - Parameter hexARGB: ARGB hexadecimal representation, `#FF000000` or `FF000000`.
     /// - Returns: Initialized CGColor.
     public static func cgColor(hexARGB: String) -> CGColor? {
-        
         guard let colorInteger = hexARGB.hexadecimalColorInteger else {
             return nil
         }
@@ -99,7 +98,6 @@ extension CGColor {
     /// - Parameter hexRGBA: RGBA hexadecimal representation, `#000000FF` or `000000FF`.
     /// - Returns: Initialized CGColor.
     public static func cgColor(hexRGBA: String) -> CGColor? {
-        
         guard let colorInteger = hexRGBA.hexadecimalColorInteger else {
             return nil
         }
@@ -192,13 +190,40 @@ extension CGColor {
     }
     
     public var cssColor: String {
-        let redByte = Data([UInt8(self.red)])
-        let greenByte = Data([UInt8(self.green)])
-        let blueByte = Data([UInt8(self.blue)])
-        return "#\(redByte.hexString)\(greenByte.hexString)\(blueByte.hexString)"
+        var cssColor = "#"
+        
+        for colorComponent in [self.red, self.green, self.blue] {
+            cssColor += Data([UInt8(colorComponent)]).hexString
+        }
+
+        return cssColor
     }
 }
 
+extension CGColor {
+    public var isLight: Bool {
+        return self.brightness >= 0.5
+    }
+    
+    public var isDark: Bool {
+        return self.brightness < 0.5
+    }
+    
+    private var brightness: CGFloat {
+        guard let rgbCGColor = self.converted(
+            to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil),
+            let components = rgbCGColor.components else {
+                return 0
+        }
+        
+        guard components.count >= 3 else {
+            return 0
+        }
+
+        return CGFloat(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000)
+    }
+}
+    
 extension String {
     internal var hexadecimalColorInteger: Int? {
         let hexadecimalColorString = self.hasPrefix("#") ? String(
