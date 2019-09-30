@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FoundationKit
 import CoreGraphics
 
 #if !os(macOS) && canImport(UIKit)
@@ -111,12 +112,30 @@ extension CGColor {
     /// - Parameter hexRGB: RGB hexadecimal representation, `#FFFFFF` or `FFFFFF`.
     /// - Returns: Initialized CGColor with alpha set to 1.
     public static func cgColor(hexRGB: String) -> CGColor? {
-        
         guard let colorInteger = hexRGB.hexadecimalColorInteger else {
             return nil
         }
         
         return CGColor.cgColor(rgb: colorInteger)
+    }
+    
+    public static func cssColor(_ string: String) -> CGColor? {
+        let string = string.lowercased()
+        if string.hasPrefix("rgb(") && string.hasSuffix(")") {
+            let rgbComponents = string.dropFirst(4).dropLast()
+            let colorComponents = rgbComponents.split(separator: ",")
+                .compactMap({ Double($0.trimmingCharacters(in: .whitespaces)) })
+            guard colorComponents.count == 3 else { return nil }
+            let red = CGFloat(colorComponents[0])
+            let green = CGFloat(colorComponents[1])
+            let blue = CGFloat(colorComponents[2])
+            return CGColor.cgColor(red: red, green: green, blue: blue, alpha: 1.0)
+        }
+        else if string.hasPrefix("#") && string.count == 7 {
+            return CGColor.cgColor(hexRGB: string)
+        }
+        
+        return nil
     }
     
     /// Red color.
@@ -173,13 +192,17 @@ extension CGColor {
     }
     
     public var cssColor: String {
-        return "rgb(\(self.red), \(self.green), \(self.blue))"
+        let redByte = Data([UInt8(self.red)])
+        let greenByte = Data([UInt8(self.green)])
+        let blueByte = Data([UInt8(self.blue)])
+        return "#\(redByte.hexString)\(greenByte.hexString)\(blueByte.hexString)"
     }
 }
 
 extension String {
     internal var hexadecimalColorInteger: Int? {
-        let hexadecimalColorString = self.hasPrefix("#") ? String(self.suffix(from: self.index(self.startIndex, offsetBy: 1))) : self
+        let hexadecimalColorString = self.hasPrefix("#") ? String(
+            self.suffix(from: self.index(self.startIndex, offsetBy: 1))) : self
         
         return Int(hexadecimalColorString, radix: 16)
     }
