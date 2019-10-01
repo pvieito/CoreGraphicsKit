@@ -200,6 +200,7 @@ extension CGColor {
     }
 }
 
+@available(macOS 10.11, *)
 extension CGColor {
     public var isLight: Bool {
         return self.brightness >= 0.5
