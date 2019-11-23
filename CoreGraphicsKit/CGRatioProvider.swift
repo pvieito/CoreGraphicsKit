@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreGraphics
 
 public protocol CGRatioProvider {
     var ratio: CGRatio { get }

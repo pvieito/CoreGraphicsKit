@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreGraphics
 
 public protocol CGScalable {
     func scaled(by scale: CGFloat) -> Self

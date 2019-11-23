@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import CoreGraphics
 
 extension CGSize {
-
     /// Initializes a CGSize with a given ratio and width.
     ///
     /// - Parameters:
@@ -35,7 +33,6 @@ extension CGSize {
     ///   - ratio: Ratio of the size.
     ///   - boundingBox: Bounding box size where it should fit.
     public init(ratio: CGRatio, boundingBoxSize: CGSize) {
-        
         if ratio < boundingBoxSize.ratio {
             self.init(ratio: ratio, height: boundingBoxSize.height)
         }
@@ -86,7 +83,6 @@ extension CGSize {
 }
 
 extension CGSize: CGSizeProvider {
-    
     /// Basic CGSizeProvider implementation.
     public var size: CGSize {
         return self
@@ -94,7 +90,6 @@ extension CGSize: CGSizeProvider {
 }
 
 extension CGSize: CGRatioProvider {
-
     /// The ratio between the width and the height of the size.
     public var ratio: CGRatio {
         return self.width / self.height
@@ -102,7 +97,6 @@ extension CGSize: CGRatioProvider {
 }
 
 extension CGSize: CGAreaProvider {
-
     /// Area of the size.
     public var area: CGFloat {
         return self.width * self.height
@@ -110,7 +104,6 @@ extension CGSize: CGAreaProvider {
 }
 
 extension CGSize: CGScalable {
-    
     /// Return the size scaled by a floating point factor.
     ///
     /// - Parameter scale: Scale factor.
@@ -121,7 +114,6 @@ extension CGSize: CGScalable {
 }
 
 extension CGSize: CustomStringConvertible {
-
     /// Formatted description of the size.
     public var description: String {
         return "\(self.width) × \(self.height)"

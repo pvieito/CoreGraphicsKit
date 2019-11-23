@@ -1,9 +1,11 @@
 //
-//  ColorThief.swift
-//  ColorThiefSwift
+//  CGImage+Color.swift
+//  CoreGraphicsKit
 //
-//  Created by Kazuki Ohara on 2017/02/11.
-//  Copyright © 2017 Kazuki Ohara. All rights reserved.
+//  Created by Pedro José Pereira Vieito on 20/01/2019.
+//  Copyright © 2019 Pedro José Pereira Vieito. All rights reserved.
+//
+
 //
 //  License
 //  -------
@@ -16,7 +18,12 @@
 //  http://lokeshdhakar.com/projects/color-thief/
 //  Sven Woltmann - for the fast Java Implementation
 //  https://github.com/SvenWoltmann/color-thief-java
+//
+//  Created by Kazuki Ohara on 2017/02/11.
+//  Copyright © 2017 Kazuki Ohara. All rights reserved.
+//
 
+#if canImport(CoreGraphics)
 import CoreGraphics
 
 extension CGImage {
@@ -625,3 +632,4 @@ private class MMCQ {
         }
     }
 }
+#endif

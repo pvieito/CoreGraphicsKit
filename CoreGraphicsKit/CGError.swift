@@ -7,17 +7,14 @@
 //
 
 import Foundation
-import CoreGraphics
 
 extension CGError {
-    
     public enum OutputError: LocalizedError {
         case imageNotGenerated
         case destinationNotAvailable
         case errorWrittingOutput
 
         public var errorDescription: String? {
-            
             switch self {
             case .imageNotGenerated:
                 return "The image of the CGContext did not render successfully."

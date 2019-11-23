@@ -6,6 +6,7 @@
 //  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if canImport(CoreGraphics)
 import Foundation
 import FoundationKit
 import CoreGraphics
@@ -181,3 +182,4 @@ extension CGImage {
         try temporaryFile.open()
     }
 }
+#endif
