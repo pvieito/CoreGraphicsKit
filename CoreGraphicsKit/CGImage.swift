@@ -159,7 +159,6 @@ extension CGImage {
     /// - Parameters:
     ///   - format: Destination format. JPEG by default.
     public func temporaryFile(format: OutputFormat = .jpeg) throws -> URL {
-        
         let imageUUID = UUID()
         let temporaryImageURL = FileManager.default.autocleanedTemporaryDirectory
             .appendingPathComponent(imageUUID.uuidString)
