@@ -6,7 +6,9 @@
 //  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if canImport(CoreGraphics)
 import Foundation
+import CoreGraphics
 
 extension CGError {
     public enum OutputError: LocalizedError {
@@ -26,3 +28,4 @@ extension CGError {
         }
     }
 }
+#endif
