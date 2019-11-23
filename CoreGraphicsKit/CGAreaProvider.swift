@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreGraphics
 
 public protocol CGAreaProvider {
     var area: CGFloat { get }
