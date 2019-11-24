@@ -44,10 +44,11 @@ extension CGColor {
             return nil
         }
         
-        return CGColor.cgColor(red: CGFloat((argb >> 16) & 0xFF) / 255.0,
-                               green: CGFloat((argb >> 8) & 0xFF) / 255.0,
-                               blue: CGFloat((argb >> 0) & 0xFF) / 255.0,
-                               alpha: CGFloat((argb >> 24) & 0xFF) / 255.0)
+        return CGColor.cgColor(
+            red: CGFloat((argb >> 16) & 0xFF) / 255.0,
+            green: CGFloat((argb >> 8) & 0xFF) / 255.0,
+            blue: CGFloat((argb >> 0) & 0xFF) / 255.0,
+            alpha: CGFloat((argb >> 24) & 0xFF) / 255.0)
     }
     
     /// Initializes a CGColor with an integer representing the red, green, blue and alpha channels.
@@ -60,10 +61,11 @@ extension CGColor {
             return nil
         }
         
-        return CGColor.cgColor(red: CGFloat((rgba >> 24) & 0xFF) / 255.0,
-                               green: CGFloat((rgba >> 16) & 0xFF) / 255.0,
-                               blue: CGFloat((rgba >> 8) & 0xFF) / 255.0,
-                               alpha: CGFloat((rgba >> 0) & 0xFF) / 255.0)
+        return CGColor.cgColor(
+            red: CGFloat((rgba >> 24) & 0xFF) / 255.0,
+            green: CGFloat((rgba >> 16) & 0xFF) / 255.0,
+            blue: CGFloat((rgba >> 8) & 0xFF) / 255.0,
+            alpha: CGFloat((rgba >> 0) & 0xFF) / 255.0)
     }
     
     /// Initializes a CGColor with an integer representing the red, green and blue channels.
@@ -76,10 +78,11 @@ extension CGColor {
             return nil
         }
         
-        return CGColor.cgColor(red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
-                               green: CGFloat((rgb >> 8) & 0xFF) / 255.0,
-                               blue: CGFloat((rgb >> 0) & 0xFF) / 255.0,
-                               alpha: 1)
+        return CGColor.cgColor(
+            red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
+            green: CGFloat((rgb >> 8) & 0xFF) / 255.0,
+            blue: CGFloat((rgb >> 0) & 0xFF) / 255.0,
+            alpha: 1)
     }
     
     /// Initializes a CGColor with an RGB hexadecimal representation.
@@ -196,7 +199,7 @@ extension CGColor {
         for colorComponent in [self.red, self.green, self.blue] {
             cssColor += Data([UInt8(colorComponent)]).hexString
         }
-
+        
         return cssColor
     }
 }
@@ -221,11 +224,11 @@ extension CGColor {
         guard components.count >= 3 else {
             return 0
         }
-
+        
         return CGFloat(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1000)
     }
 }
-    
+
 extension String {
     internal var hexadecimalColorInteger: Int? {
         let hexadecimalColorString = self.hasPrefix("#") ? String(
