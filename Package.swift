@@ -18,6 +18,10 @@ let package = Package(
             name: "CoreGraphicsKit",
             dependencies: ["FoundationKit"],
             path: "CoreGraphicsKit"
+        ),
+        .testTarget(
+            name: "CoreGraphicsKitTests",
+            dependencies: ["CoreGraphicsKit", "FoundationKit"]
         )
     ]
 )
