@@ -8,6 +8,10 @@
 
 import Foundation
 
+#if canImport(Darwin)
+import CoreGraphics
+#endif
+
 public protocol CGAreaProvider {
     var area: CGFloat { get }
 }

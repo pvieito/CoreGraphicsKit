@@ -8,6 +8,10 @@
 
 import Foundation
 
+#if canImport(Darwin)
+import CoreGraphics
+#endif
+
 extension CGSize {
     /// Initializes a CGSize with a given ratio and width.
     ///

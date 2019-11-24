@@ -8,6 +8,10 @@
 
 import Foundation
 
+#if canImport(Darwin)
+import CoreGraphics
+#endif
+
 public protocol CGScalable {
     func scaled(by scale: CGFloat) -> Self
 }

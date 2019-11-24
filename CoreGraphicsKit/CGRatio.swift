@@ -8,4 +8,8 @@
 
 import Foundation
 
+#if canImport(Darwin)
+import CoreGraphics
+#endif
+
 public typealias CGRatio = CGFloat

@@ -8,6 +8,10 @@
 
 import Foundation
 
+#if canImport(Darwin)
+import CoreGraphics
+#endif
+
 extension CGRect {
     /// Initializes a CGRect with a given size box centered on a bouding box.
     ///
