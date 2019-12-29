@@ -29,7 +29,6 @@ extension CGRect {
 extension CGRect: CGSizeProvider { }
 
 extension CGRect: CGRatioProvider {
-
     /// The ratio between the width and the height of the size.
     public var ratio: CGRatio {
         return self.size.ratio
@@ -37,7 +36,6 @@ extension CGRect: CGRatioProvider {
 }
 
 extension CGRect: CGAreaProvider {
-
     /// Area of the CGRect.
     public var area: CGFloat {
         return self.size.width * self.size.height
@@ -45,7 +43,6 @@ extension CGRect: CGAreaProvider {
 }
 
 extension CGRect: CGScalable {
-
     /// Return a rect with the size scaled by a floating point factor.
     ///
     /// - Parameter scale: Scale factor.
