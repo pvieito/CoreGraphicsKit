@@ -36,13 +36,6 @@
 			remoteGlobalIDString = AA912C1A1EE96CF2002DD639;
 			remoteInfo = FoundationKitWatch;
 		};
-		AA46064C20836F45003C5014 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AA46064220836F45003C5014 /* FoundationKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AAD31D251F883C8800C056DD;
-			remoteInfo = FoundationKitTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +52,6 @@
 		AA75B20E1EEC2E0D00784B55 /* CGSizeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSizeProvider.swift; sourceTree = "<group>"; };
 		AAAC2CB121F50B5600D0A633 /* CGImage+Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+Color.swift"; sourceTree = "<group>"; };
 		AABE49961EDC4DB60049A09C /* CGAreaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAreaProvider.swift; sourceTree = "<group>"; };
-		AADC39602240520A00502FBB /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		AAECCAB31F643C91001EC33F /* CGError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,7 +72,6 @@
 			children = (
 				AA46064920836F45003C5014 /* FoundationKit.framework */,
 				AA46064B20836F45003C5014 /* FoundationKit.framework */,
-				AA46064D20836F45003C5014 /* FoundationKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				AA46064220836F45003C5014 /* FoundationKit.xcodeproj */,
-				AADC39602240520A00502FBB /* Package.swift */,
 				AA558AEF1EC28E3F0099A8B0 /* CoreGraphicsKit */,
 				AA558AEE1EC28E3F0099A8B0 /* Products */,
 				AA46064E20836F4E003C5014 /* Frameworks */,
@@ -216,13 +206,6 @@
 			fileType = wrapper.framework;
 			path = FoundationKit.framework;
 			remoteRef = AA46064A20836F45003C5014 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AA46064D20836F45003C5014 /* FoundationKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = FoundationKitTests.xctest;
-			remoteRef = AA46064C20836F45003C5014 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
