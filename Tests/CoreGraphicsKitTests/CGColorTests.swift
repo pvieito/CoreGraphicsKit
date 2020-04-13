@@ -14,15 +14,29 @@ import CoreGraphicsKit
 
 class CGColorTests: XCTestCase {
     func testCGColor() throws {
+        let blackColor = CGColor.cgColor(hexRGB: "#000000")
+        XCTAssertNotNil(blackColor)
+        XCTAssertEqual(blackColor?.hexColor, "#000000")
+        XCTAssertEqual(blackColor?.hexColor, CGColor.black.hexColor)
+        XCTAssertNotEqual(blackColor?.hexColor, CGColor.green.hexColor)
+
+        let whiteColor = CGColor.cgColor(hexRGB: "#FFFFFF")
+        XCTAssertNotNil(whiteColor)
+        XCTAssertEqual(whiteColor?.hexColor, "#FFFFFF")
+        XCTAssertEqual(whiteColor?.hexColor, CGColor.white.hexColor)
+        XCTAssertNotEqual(whiteColor?.hexColor, CGColor.green.hexColor)
+
         let redColor = CGColor.cgColor(hexRGB: "#FF0000")
         XCTAssertNotNil(redColor)
-        XCTAssertEqual(redColor?.cssColor, CGColor.red.cssColor)
-        XCTAssertNotEqual(redColor?.cssColor, CGColor.green.cssColor)
-        
+        XCTAssertEqual(redColor?.hexColor, "#FF0000")
+        XCTAssertEqual(redColor?.hexColor, CGColor.red.hexColor)
+        XCTAssertNotEqual(redColor?.hexColor, CGColor.green.hexColor)
+
         let greenColor = CGColor.cgColor(hexRGB: "#00FF00")
         XCTAssertNotNil(greenColor)
-        XCTAssertEqual(greenColor?.cssColor, CGColor.green.cssColor)
-        XCTAssertNotEqual(greenColor?.cssColor, CGColor.blue.cssColor)
+        XCTAssertEqual(greenColor?.hexColor, "#00FF00")
+        XCTAssertEqual(greenColor?.hexColor, CGColor.green.hexColor)
+        XCTAssertNotEqual(greenColor?.hexColor, CGColor.blue.hexColor)
     }
 }
 #endif

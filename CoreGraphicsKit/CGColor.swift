@@ -16,20 +16,22 @@ import UIKit
 #endif
 
 extension CGColor {
+    public static let defaultAlphaValue: CGFloat = 1.0
+    
     #if !os(macOS) && canImport(UIKit)
-    public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
+    public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = defaultAlphaValue) -> CGColor {
         return UIColor(red: red, green: green, blue: blue, alpha: alpha).cgColor
     }
     
-    public static func cgColor(gray: CGFloat, alpha: CGFloat) -> CGColor {
+    public static func cgColor(gray: CGFloat, alpha: CGFloat = defaultAlphaValue) -> CGColor {
         return UIColor(white: gray, alpha: alpha).cgColor
     }
     #else
-    public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
+    public static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = defaultAlphaValue) -> CGColor {
         return CGColor.init(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    public static func cgColor(gray: CGFloat, alpha: CGFloat) -> CGColor {
+    public static func cgColor(gray: CGFloat, alpha: CGFloat = defaultAlphaValue) -> CGColor {
         return CGColor.init(gray: gray, alpha: alpha)
     }
     #endif
@@ -142,28 +144,33 @@ extension CGColor {
     
     /// Red color.
     public static var red: CGColor {
-        return #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+        return CGColor.cgColor(red: 1.0, green: 0.0, blue: 0.0)
     }
     
     /// Green color.
     public static var green: CGColor {
-        return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
+        return CGColor.cgColor(red: 0.0, green: 1.0, blue: 0.0)
     }
     
     /// Blue color.
     public static var blue: CGColor {
-        return #colorLiteral(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
+        return CGColor.cgColor(red: 0.0, green: 0.0, blue: 1.0)
     }
     
     /// Gray color.
     public static var gray: CGColor {
-        return #colorLiteral(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+        return CGColor.cgColor(red: 0.5, green: 0.5, blue: 0.5)
     }
     
     #if !os(macOS)
     /// Black color.
     public static var black: CGColor {
-        return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        return CGColor.cgColor(red: 0.0, green: 0.0, blue: 0.0)
+    }
+    
+    /// White color.
+    public static var white: CGColor {
+        return CGColor.cgColor(red: 1.0, green: 1.0, blue: 1.0)
     }
     #endif
 }
@@ -200,9 +207,17 @@ extension CGColor {
     
     public var hexColor: String {
         var hexColor = "#"
+        let cgColor: CGColor
         
-        let cgColor = self.converted(
-            to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil) ?? CGColor.black
+        
+        if #available(macOS 10.11, *), self.colorSpace?.model != .rgb {
+            cgColor = self.converted(
+                to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil) ?? CGColor.black
+        }
+        else {
+            cgColor = self
+        }
+        
         for colorComponent in [cgColor.red, cgColor.green, cgColor.blue] {
             hexColor += Data([UInt8(colorComponent)]).hexString
         }
