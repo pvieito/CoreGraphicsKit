@@ -193,14 +193,21 @@ extension CGColor {
         return Int(self.blueFraction * 255)
     }
     
+    @available(*, deprecated, renamed: "hexColor")
     public var cssColor: String {
-        var cssColor = "#"
+        return self.hexColor
+    }
+    
+    public var hexColor: String {
+        var hexColor = "#"
         
-        for colorComponent in [self.red, self.green, self.blue] {
-            cssColor += Data([UInt8(colorComponent)]).hexString
+        let cgColor = self.converted(
+            to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil) ?? CGColor.black
+        for colorComponent in [cgColor.red, cgColor.green, cgColor.blue] {
+            hexColor += Data([UInt8(colorComponent)]).hexString
         }
         
-        return cssColor
+        return hexColor
     }
 }
 
