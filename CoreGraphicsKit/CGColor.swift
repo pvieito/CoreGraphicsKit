@@ -83,8 +83,7 @@ extension CGColor {
         return CGColor.cgColor(
             red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
             green: CGFloat((rgb >> 8) & 0xFF) / 255.0,
-            blue: CGFloat((rgb >> 0) & 0xFF) / 255.0,
-            alpha: 1)
+            blue: CGFloat((rgb >> 0) & 0xFF) / 255.0)
     }
     
     /// Initializes a CGColor with an RGB hexadecimal representation.
