@@ -175,16 +175,32 @@ extension CGColor {
 }
 
 extension CGColor {
+    public var rgbColor: CGColor {
+        let cgColor: CGColor
+
+        if #available(macOS 10.11, *), self.colorSpace?.model != .rgb {
+            cgColor = self.converted(
+                to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil) ?? CGColor.black
+        }
+        else {
+            cgColor = self
+        }
+        
+        return cgColor
+    }
+}
+
+extension CGColor {
     public var redFraction: CGFloat {
-        return self.components![0]
+        return self.rgbColor.components![0]
     }
     
     public var greenFraction: CGFloat {
-        return self.components![1]
+        return self.rgbColor.components![1]
     }
     
     public var blueFraction: CGFloat {
-        return self.components![2]
+        return self.rgbColor.components![2]
     }
     
     public var red: Int {
@@ -199,29 +215,20 @@ extension CGColor {
         return Int(self.blueFraction * 255)
     }
     
-    @available(*, deprecated, renamed: "hexColor")
+    @available(*, deprecated, renamed: "hexRGB")
     public var cssColor: String {
-        return self.hexColor
+        return self.hexRGB
     }
     
-    public var hexColor: String {
-        var hexColor = "#"
-        let cgColor: CGColor
-        
-        
-        if #available(macOS 10.11, *), self.colorSpace?.model != .rgb {
-            cgColor = self.converted(
-                to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil) ?? CGColor.black
-        }
-        else {
-            cgColor = self
-        }
+    public var hexRGB: String {
+        var hexRGB = "#"
+        let cgColor = self.rgbColor
         
         for colorComponent in [cgColor.red, cgColor.green, cgColor.blue] {
-            hexColor += Data([UInt8(colorComponent)]).hexString
+            hexRGB += Data([UInt8(colorComponent)]).hexString
         }
         
-        return hexColor
+        return hexRGB
     }
 }
 
@@ -236,13 +243,7 @@ extension CGColor {
     }
     
     private var brightness: CGFloat {
-        guard let rgbCGColor = self.converted(
-            to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil),
-            let components = rgbCGColor.components else {
-                return 0
-        }
-        
-        guard components.count >= 3 else {
+        guard let components = self.rgbColor.components, components.count >= 3 else {
             return 0
         }
         
