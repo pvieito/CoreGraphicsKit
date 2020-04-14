@@ -41,7 +41,6 @@ extension CGColor {
     /// - Parameter argb: Integer with 8 bits per channels and alpha, red, green, blue channels order.
     /// - Returns: Initialized CGColor.
     private static func cgColor(argb: UInt32) -> CGColor? {
-        
         guard argb >= 0 && argb <= 0xFFFFFFFF as UInt32 else {
             return nil
         }
@@ -58,7 +57,6 @@ extension CGColor {
     /// - Parameter argb: Integer with 8 bits per channels and red, green, blue, alpha channels order.
     /// - Returns: Initialized CGColor.
     private static func cgColor(rgba: UInt32) -> CGColor? {
-        
         guard rgba >= 0 && rgba <= 0xFFFFFFFF as UInt32 else {
             return nil
         }
@@ -75,7 +73,6 @@ extension CGColor {
     /// - Parameter argb: Integer with 8 bits per channels and red, green, blue channels order.
     /// - Returns: Initialized CGColor with alpha set to 1.
     private static func cgColor(rgb: Int) -> CGColor? {
-        
         guard rgb >= 0 && rgb <= 0xFFFFFF else {
             return nil
         }
