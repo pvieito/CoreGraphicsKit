@@ -119,25 +119,6 @@ extension CGColor {
         return CGColor.cgColor(rgb: colorInteger)
     }
     
-    public static func cssColor(_ string: String) -> CGColor? {
-        let string = string.lowercased()
-        if string.hasPrefix("rgb(") && string.hasSuffix(")") {
-            let rgbComponents = string.dropFirst(4).dropLast()
-            let colorComponents = rgbComponents.split(separator: ",")
-                .compactMap({ Double($0.trimmingCharacters(in: .whitespaces)) })
-            guard colorComponents.count == 3 else { return nil }
-            let red = CGFloat(colorComponents[0])
-            let green = CGFloat(colorComponents[1])
-            let blue = CGFloat(colorComponents[2])
-            return CGColor.cgColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
-        else if string.hasPrefix("#") && string.count == 7 {
-            return CGColor.cgColor(hexRGB: string)
-        }
-        
-        return nil
-    }
-    
     /// Red color.
     public static var red: CGColor {
         return CGColor.cgColor(red: 1.0, green: 0.0, blue: 0.0)
@@ -210,11 +191,6 @@ extension CGColor {
     
     public var blue: Int {
         return Int(self.blueFraction * 255)
-    }
-    
-    @available(*, deprecated, renamed: "hexRGB")
-    public var cssColor: String {
-        return self.hexRGB
     }
     
     public var hexRGB: String {
