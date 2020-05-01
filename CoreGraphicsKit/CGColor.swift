@@ -119,6 +119,14 @@ extension CGColor {
         return CGColor.cgColor(rgb: colorInteger)
     }
     
+    public static func cgColorWithValidation(hexRGB: String) throws -> CGColor {
+        guard let cgColor = CGColor.cgColor(hexRGB: hexRGB) else {
+            throw NSError(description: "Invalid input RGB hex color value “\(self)”. Valid input should be formatted with a pound symbol followed by six hexadecimal digits, for example “#F1F2F3”.")
+        }
+        
+        return cgColor
+    }
+    
     /// Red color.
     public static var red: CGColor {
         return CGColor.cgColor(red: 1.0, green: 0.0, blue: 0.0)
