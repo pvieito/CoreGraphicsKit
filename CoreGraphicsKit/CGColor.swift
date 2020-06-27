@@ -161,12 +161,20 @@ extension CGColor {
 }
 
 extension CGColor {
+    enum Space {
+        static let sRGB: CGColorSpace = {
+            return CGColorSpace(name: CGColorSpace.sRGB) ?? CGColorSpaceCreateDeviceRGB()
+        }()
+    }
+}
+
+extension CGColor {    
     public var rgbColor: CGColor {
         let cgColor: CGColor
 
-        if #available(macOS 10.11, *), self.colorSpace?.model != .rgb {
+        if #available(macOS 10.11, iOS 10, *), self.colorSpace?.name != CGColor.Space.sRGB.name {
             cgColor = self.converted(
-                to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil) ?? CGColor.black
+                to: CGColor.Space.sRGB, intent: .defaultIntent, options: nil) ?? CGColor.black
         }
         else {
             cgColor = self
