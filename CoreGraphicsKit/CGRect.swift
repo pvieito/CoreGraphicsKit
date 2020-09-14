@@ -26,6 +26,12 @@ extension CGRect {
     }
 }
 
+extension CGRect {
+    public var zeroOriginRect: CGRect {
+        return self.size.zeroOriginRect
+    }
+}
+
 extension CGRect: CGSizeProvider { }
 
 extension CGRect: CGRatioProvider {

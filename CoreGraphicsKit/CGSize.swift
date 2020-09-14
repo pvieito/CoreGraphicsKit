@@ -86,6 +86,12 @@ extension CGSize {
     }
 }
 
+extension CGSize {
+    public var zeroOriginRect: CGRect {
+        return CGRect(origin: .zero, size: self)
+    }
+}
+
 extension CGSize: CGSizeProvider {
     /// Basic CGSizeProvider implementation.
     public var size: CGSize {
