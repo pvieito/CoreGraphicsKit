@@ -176,7 +176,8 @@ extension CGColor {
     public var rgbColor: CGColor {
         let cgColor: CGColor
 
-        if #available(macOS 10.11, iOS 10, *), !CGColor.Space.sRGBIdentifiers.contains(self.colorSpace?.name ?? "" as CFString) {
+        if #available(macOS 10.11, iOS 10, tvOS 10, *),
+           !CGColor.Space.sRGBIdentifiers.contains(self.colorSpace?.name ?? "" as CFString) {
             cgColor = self.converted(
                 to: CGColor.Space.sRGB, intent: .defaultIntent, options: nil) ?? CGColor.black
         }
