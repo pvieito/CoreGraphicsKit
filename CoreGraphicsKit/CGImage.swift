@@ -8,9 +8,14 @@
 
 #if canImport(CoreGraphics)
 import Foundation
-import FoundationKit
 import CoreGraphics
 import ImageIO
+
+#if canImport(FoundationKitMac)
+import FoundationKitMac
+#else
+import FoundationKit
+#endif
 
 #if canImport(MobileCoreServices)
 import MobileCoreServices
