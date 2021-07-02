@@ -21,7 +21,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/pvieito/FoundationKit.git", .branch("master")),
+        .package(url: "git@github.com:pvieito/FoundationKit.git", .branch("master")),
     ],
     targets: [
         .target(
