@@ -27,14 +27,12 @@ let package = Package(
         .target(
             name: "CoreGraphicsKit",
             dependencies: ["FoundationKit"],
-            path: "CoreGraphicsKit",
-            exclude: ["Info.plist"]
+            path: "CoreGraphicsKit"
         ),
         .target(
             name: "CoreGraphicsKitMac",
             dependencies: [.product(name: "FoundationKitMac", package: "FoundationKit")],
-            path: "CoreGraphicsKitMac",
-            exclude: ["Info.plist"]
+            path: "CoreGraphicsKitMac"
         ),
         .testTarget(
             name: "CoreGraphicsKitTests",
