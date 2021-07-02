@@ -14,7 +14,11 @@ let package = Package(
         .library(
             name: "CoreGraphicsKit",
             targets: ["CoreGraphicsKit"]
-        )
+        ),
+        .library(
+            name: "CoreGraphicsKitMac",
+            targets: ["CoreGraphicsKitMac"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pvieito/FoundationKit.git", .branch("master")),
@@ -24,6 +28,11 @@ let package = Package(
             name: "CoreGraphicsKit",
             dependencies: ["FoundationKit"],
             path: "CoreGraphicsKit"
+        ),
+        .target(
+            name: "CoreGraphicsKitMac",
+            dependencies: ["FoundationKitMac"],
+            path: "CoreGraphicsKitMac"
         ),
         .testTarget(
             name: "CoreGraphicsKitTests",
