@@ -10,10 +10,10 @@
 import Foundation
 import CoreGraphics
 
-#if canImport(FoundationKitMac)
-import FoundationKitMac
-#else
+#if canImport(FoundationKit)
 import FoundationKit
+#else
+import FoundationKitMac
 #endif
 
 #if !os(macOS) && canImport(UIKit)

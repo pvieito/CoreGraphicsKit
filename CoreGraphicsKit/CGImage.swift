@@ -11,10 +11,10 @@ import Foundation
 import CoreGraphics
 import ImageIO
 
-#if canImport(FoundationKitMac)
-import FoundationKitMac
-#else
+#if canImport(FoundationKit)
 import FoundationKit
+#else
+import FoundationKitMac
 #endif
 
 #if canImport(MobileCoreServices)
