@@ -93,7 +93,7 @@ extension CGColor {
     /// - Parameter hexARGB: ARGB hexadecimal representation, `#FF000000` or `FF000000`.
     /// - Returns: Initialized CGColor.
     public static func cgColor(hexARGB: String) -> CGColor? {
-        guard let colorInteger = hexARGB.hexadecimalColorInteger else {
+        guard let colorInteger = hexARGB.hexadecimalColorInteger(numberOfComponents: 4) else {
             return nil
         }
         
@@ -105,7 +105,7 @@ extension CGColor {
     /// - Parameter hexRGBA: RGBA hexadecimal representation, `#000000FF` or `000000FF`.
     /// - Returns: Initialized CGColor.
     public static func cgColor(hexRGBA: String) -> CGColor? {
-        guard let colorInteger = hexRGBA.hexadecimalColorInteger else {
+        guard let colorInteger = hexRGBA.hexadecimalColorInteger(numberOfComponents: 4) else {
             return nil
         }
         
@@ -117,7 +117,7 @@ extension CGColor {
     /// - Parameter hexRGB: RGB hexadecimal representation, `#FFFFFF` or `FFFFFF`.
     /// - Returns: Initialized CGColor with alpha set to 1.
     public static func cgColor(hexRGB: String) -> CGColor? {
-        guard let colorInteger = hexRGB.hexadecimalColorInteger else {
+        guard let colorInteger = hexRGB.hexadecimalColorInteger() else {
             return nil
         }
         
@@ -301,10 +301,24 @@ extension CGColor {
 }
 
 extension String {
-    internal var hexadecimalColorInteger: Int? {
-        let hexadecimalColorString = self.hasPrefix("#") ? String(
+    private var hexadecimalColorString: String? {
+        return self.hasPrefix("#") ? String(
             self.suffix(from: self.index(self.startIndex, offsetBy: 1))) : self
-        
+    }
+
+    fileprivate func hexadecimalColorInteger(numberOfComponents: Int = 3) -> Int? {
+        guard let rawHexadecimalColorString = self.hexadecimalColorString else { return nil }
+        var hexadecimalColorString = ""
+        if numberOfComponents == 3 && rawHexadecimalColorString.count == numberOfComponents {
+            for componentIndex in 0..<numberOfComponents {
+                let componentValue = rawHexadecimalColorString[offset: componentIndex]
+                hexadecimalColorString += "\(componentValue)\(componentValue)"
+            }
+        }
+        else {
+            hexadecimalColorString = rawHexadecimalColorString
+        }
+        guard hexadecimalColorString.count == numberOfComponents * 2 else { return nil }
         return Int(hexadecimalColorString, radix: 16)
     }
 }
