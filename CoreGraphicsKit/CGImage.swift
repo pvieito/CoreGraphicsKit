@@ -247,7 +247,6 @@ extension CGImage {
     }
 }
 
-
 #if os(macOS)
 extension NSImage {
     public var cgImage: CGImage? {
