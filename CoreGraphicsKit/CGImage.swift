@@ -250,7 +250,7 @@ extension CGImage {
 
 #if os(macOS)
 extension NSImage {
-    var cgImage: CGImage? {
+    public var cgImage: CGImage? {
         return self.cgImage(forProposedRect: nil, context: nil, hints: nil)
     }
 }
