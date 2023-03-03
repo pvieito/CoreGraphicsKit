@@ -20,15 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#if canImport(UIKit)
+#if canImport(CoreGraphics)
 import Foundation
-import UIKit
 import CoreGraphics
 
 extension CGImage {
     public func getVibrantPalette() -> CGVibrantPalette {
-        let image = UIImage(cgImage: self)
-        return VibrantManager.from(image).getPalette()
+        return VibrantManager.from(self).getPalette()
     }
 }
 
@@ -39,58 +37,53 @@ extension CGImage {
 //  Created by Bryce Dougherty on 5/3/20.
 //  Copyright © 2020 Bryce Dougherty. All rights reserved.
 //
-typealias Callback<T> = (T)->Void
+typealias Callback<T> = (T) -> Void
 
 class Builder {
     
-    private var _src: UIImage
+    private var _src: CGImage
     private var _opts: VibrantManager.Options
     
-    init(_ src: UIImage, _ opts: VibrantManager.Options = VibrantManager.Options()) {
+    fileprivate init(_ src: CGImage, _ opts: VibrantManager.Options = VibrantManager.Options()) {
         self._src = src
         self._opts = opts
     }
-    func maxColorCount(_ n: Int)->Builder {
+    func maxColorCount(_ n: Int) -> Builder {
         self._opts.colorCount = n
         return self
     }
     
-    func maxDimension(_ d: CGFloat)->Builder {
-        self._opts.maxDimension = d
-        return self
-    }
-    
-    func quality(_ q: Int)->Builder {
+    func quality(_ q: Int) -> Builder {
         self._opts.quality = q
         return self
     }
     
-    func addFilter(_ f: Filter)->Builder {
+    func addFilter(_ f: Filter) -> Builder {
         self._opts.filters.append(f)
         return self
     }
     
-    func removeFilter(_ f: Filter)->Builder {
+    func removeFilter(_ f: Filter) -> Builder {
         self._opts.filters.removeAll(where: { (callback: Filter) in
             callback.id == f.id
         })
         return self
     }
     
-    func useGenerator(_ generator: @escaping Generator.generator)->Builder {
+    func useGenerator(_ generator: @escaping Generator.generator) -> Builder {
         self._opts.generator = generator
         return self
     }
     
-    func useQuantizer(_ quantizer: @escaping Quantizer.quantizer)->Builder {
+    func useQuantizer(_ quantizer: @escaping Quantizer.quantizer) -> Builder {
         self._opts.quantizer = quantizer
         return self
     }
     
-    func build()->VibrantManager {
+    func build() -> VibrantManager {
         return VibrantManager(src: self._src, opts: self._opts)
     }
-    func getPalette()->CGVibrantPalette {
+    func getPalette() -> CGVibrantPalette {
         return self.build().getPalette()
     }
     func getPalette(_ cb: @escaping Callback<CGVibrantPalette>) {
@@ -110,7 +103,7 @@ class Builder {
 
 
 
-struct DELTAE94_DIFF_STATUS {
+fileprivate struct DELTAE94_DIFF_STATUS {
     static let NA:Int = 0
     static let PERFECT:Int = 1
     static let CLOSE:Int = 2
@@ -120,37 +113,22 @@ struct DELTAE94_DIFF_STATUS {
 
 //typealias Double = Double
 
-struct newErr: Error {
+fileprivate struct newErr: Error {
     init(_ message: String) {
         self.message = message
     }
     let message: String
 }
 
-func uiColorToRgb(_ color: UIColor)->RGB {
-    var r: CGFloat = 0
-    var g: CGFloat = 0
-    var b: CGFloat = 0
-    color.getRed(&r, green: &g, blue: &b, alpha: nil)
-    return (UInt8(r * 255), UInt8(g * 255), UInt8(b * 255))
+fileprivate func CGColorToRgb(_ color: CGColor) -> RGB {
+    return (UInt8(color.red), UInt8(color.green), UInt8(color.blue))
 }
 
-func rgbToUIColor(_ r: UInt8, _ g: UInt8, _ b: UInt8)->UIColor {
-    return UIColor.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: 1)
-}
-func uiColorToHsl(_ color: UIColor)->HSL {
-    var h:CGFloat = 0
-    var s:CGFloat = 0
-    var l:CGFloat = 0
-    color.getHue(&h, saturation: &s, brightness: &l, alpha: nil)
-    return (Double(h),Double(s),Double(l))
-}
-func hslToUIColor(_ h: Double, _ s: Double, _ l: Double)->UIColor {
-    return UIColor.init(hue: CGFloat(h), saturation: CGFloat(s), brightness: CGFloat(l), alpha: 1)
+fileprivate func rgbToCGColor(_ r: UInt8, _ g: UInt8, _ b: UInt8) -> CGColor {
+    return CGColor.cgColor(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: 1)
 }
 
-
-func hexToRgb(_ hex: String)->RGB? {
+fileprivate func hexToRgb(_ hex: String) -> RGB? {
     let r, g, b: UInt8
     
     if hex.hasPrefix("#") {
@@ -176,11 +154,11 @@ func hexToRgb(_ hex: String)->RGB? {
 
 
 
-func rgbToHex(_ r: UInt8, _ g: UInt8, _ b: UInt8)->String {
+func rgbToHex(_ r: UInt8, _ g: UInt8, _ b: UInt8) -> String {
     return "#" + String(format:"%02X", r) + String(format:"%02X", g) + String(format:"%02X", b)
 }
 
-func rgbToHsl(r: UInt8, g: UInt8, b: UInt8)-> Vec3<Double> {
+func rgbToHsl(r: UInt8, g: UInt8, b: UInt8) ->  Vec3<Double> {
     let r = Double(r) / 255
     let g = Double(g) / 255
     let b = Double(b) / 255
@@ -214,12 +192,12 @@ func rgbToHsl(r: UInt8, g: UInt8, b: UInt8)-> Vec3<Double> {
     return (h, s, l)
 }
 
-func hslToRgb(_ h: Double, _ s: Double, _ l: Double)-> RGB {
+func hslToRgb(_ h: Double, _ s: Double, _ l: Double) ->  RGB {
     var r: Double
     var g: Double
     var b: Double
     
-    func hue2rgb(_ p: Double, _ q: Double, _ t: Double)-> Double {
+    func hue2rgb(_ p: Double, _ q: Double, _ t: Double) ->  Double {
         var t = t
         if (t < 0) { t += 1 }
         if (t > 1) { t -= 1 }
@@ -248,7 +226,7 @@ func hslToRgb(_ h: Double, _ s: Double, _ l: Double)-> RGB {
 }
 
 
-func rgbToXyz(_ r: UInt8, _ g: UInt8, _ b: UInt8)->XYZ {
+func rgbToXyz(_ r: UInt8, _ g: UInt8, _ b: UInt8) -> XYZ {
     var r = Double(r) / 255
     var g = Double(g) / 255
     var b = Double(b) / 255
@@ -268,7 +246,7 @@ func rgbToXyz(_ r: UInt8, _ g: UInt8, _ b: UInt8)->XYZ {
     return (x: x,y: y,z: z)
 }
 
-func xyzToCIELab(_ x: Double, _ y: Double, _ z: Double)-> LAB {
+func xyzToCIELab(_ x: Double, _ y: Double, _ z: Double) ->  LAB {
     let REF_X: Double = 95.047
     let REF_Y: Double = 100
     let REF_Z: Double = 108.883
@@ -289,12 +267,12 @@ func xyzToCIELab(_ x: Double, _ y: Double, _ z: Double)-> LAB {
 }
 
 
-func rgbToCIELab(_ r: UInt8, _ g: UInt8, _ b: UInt8)->LAB {
+func rgbToCIELab(_ r: UInt8, _ g: UInt8, _ b: UInt8) -> LAB {
     let (x,y,z) = rgbToXyz(r, g, b)
     return xyzToCIELab(x, y, z)
 }
 
-func deltaE94(_ lab1: Vec3<Double>, _ lab2: Vec3<Double>)->Double {
+func deltaE94(_ lab1: Vec3<Double>, _ lab2: Vec3<Double>) -> Double {
     let WEIGHT_L:Double = 1
     let WEIGHT_C:Double = 1
     let WEIGHT_H:Double = 1
@@ -326,19 +304,19 @@ func deltaE94(_ lab1: Vec3<Double>, _ lab2: Vec3<Double>)->Double {
     return sqrt(xDL * xDL + xDC * xDC + xDH * xDH)
 }
 
-func rgbDiff(_ rgb1: RGB, _ rgb2: RGB)->Double {
+func rgbDiff(_ rgb1: RGB, _ rgb2: RGB) -> Double {
     let lab1 = apply(rgbToCIELab, rgb1)
     let lab2 = apply(rgbToCIELab, rgb2)
     return deltaE94(lab1, lab2)
 }
 
-func hexDiff(_ hex1: String, _ hex2: String)->Double {
+func hexDiff(_ hex1: String, _ hex2: String) -> Double {
     let rgb1 = hexToRgb(hex1)!
     let rgb2 = hexToRgb(hex2)!
     return rgbDiff(rgb1, rgb2)
 }
 
-func getColorDiffStatus(_ d: Int)->String {
+func getColorDiffStatus(_ d: Int) -> String {
     if (d < DELTAE94_DIFF_STATUS.NA) { return "N/A" }
     // Not perceptible by human eyes
     if (d <= DELTAE94_DIFF_STATUS.PERFECT) { return "Perfect" }
@@ -359,13 +337,13 @@ func getColorDiffStatus(_ d: Int)->String {
 //  Copyright © 2020 Bryce Dougherty. All rights reserved.
 //
 
-internal let signalBits = 5
-internal let rightShift = 8 - signalBits
-internal let multiplier = 1 << rightShift
-internal let histogramSize = 1 << (3 * signalBits)
-internal let vboxLength = 1 << signalBits
-internal let fractionByPopulation = 0.75
-internal let maxIterations = 1000
+fileprivate let signalBits = 5
+fileprivate let rightShift = 8 - signalBits
+fileprivate let multiplier = 1 << rightShift
+fileprivate let histogramSize = 1 << (3 * signalBits)
+fileprivate let vboxLength = 1 << signalBits
+fileprivate let fractionByPopulation = 0.75
+fileprivate let maxIterations = 1000
 
 //
 //  Filter.swift
@@ -376,7 +354,7 @@ internal let maxIterations = 1000
 //
 
 class Filter {
-    typealias filterFunction = (_ red: UInt8, _ green: UInt8, _ blue: UInt8, _ alpha: UInt8)->Bool
+    typealias filterFunction = (_ red: UInt8, _ green: UInt8, _ blue: UInt8, _ alpha: UInt8) -> Bool
     
     var f: filterFunction
     var id: String
@@ -391,7 +369,7 @@ class Filter {
         self.id = id
     }
     
-    static func combineFilters (filters: [Filter])->Filter? {
+    static func combineFilters (filters: [Filter]) -> Filter? {
         if filters.count == 0 { return nil }
         let newFilterFunction:filterFunction = { r,g,b,a in
             if a == 0 { return false }
@@ -418,7 +396,7 @@ class Filter {
 
 class Generator {
     
-    typealias generator = (_ swatches: [Swatch])->CGVibrantPalette
+    typealias generator = (_ swatches: [Swatch]) -> CGVibrantPalette
     
     struct Options {
         var targetDarkLuma:  Double = 0.26
@@ -444,14 +422,14 @@ class Generator {
     
     static let defaultGenerator:generator = Generator(options: Options()).generate
     
-    private func generate(swatches: [Swatch])->CGVibrantPalette {
+    private func generate(swatches: [Swatch]) -> CGVibrantPalette {
         let maxPopulation = findMaxPopulation(swatches: swatches)
         var palette = generateVariationColors(swatches: swatches, maxPopulation: maxPopulation, opts: options)
         palette = generateEmptySwatches(palette: palette, opts: options)
         return palette
     }
     
-    func findMaxPopulation( swatches: [Swatch])->Int {
+    func findMaxPopulation( swatches: [Swatch]) -> Int {
         var p: Int = 0
         swatches.forEach { (s: Swatch) in
             p = max(p, s.population)
@@ -459,7 +437,7 @@ class Generator {
         return p
     }
     
-    func isAlreadySelected (palette: CGVibrantPalette, s: Swatch)->Bool {
+    func isAlreadySelected (palette: CGVibrantPalette, s: Swatch) -> Bool {
         return palette._vibrant == s ||
         palette._darkVibrant == s ||
         palette._lightVibrant == s ||
@@ -473,7 +451,7 @@ class Generator {
         luma: Double, targetLuma: Double,
         population: Int, maxPopulation: Int, opts: Options) -> Double {
             
-            func weightedMean (values: Double...)->Double {
+            func weightedMean (values: Double...) -> Double {
                 var sum: Double = 0
                 var weightSum: Double = 0
                 var i = 0
@@ -487,7 +465,7 @@ class Generator {
                 return sum / weightSum
             }
             
-            func invertDiff (value: Double, targetValue: Double)->Double {
+            func invertDiff (value: Double, targetValue: Double) -> Double {
                 return 1 - abs(value - targetValue)
             }
             
@@ -506,7 +484,7 @@ class Generator {
                              targetSaturation: Double,
                              minSaturation: Double,
                              maxSaturation: Double,
-                             opts: Options)->Swatch? {
+                             opts: Options) -> Swatch? {
         
         var max: Swatch? = nil
         var maxValue: Double = 0
@@ -528,7 +506,7 @@ class Generator {
         return max
     }
     
-    func generateVariationColors (swatches: [Swatch], maxPopulation: Int, opts: Options)->CGVibrantPalette {
+    func generateVariationColors (swatches: [Swatch], maxPopulation: Int, opts: Options) -> CGVibrantPalette {
         
         var palette = CGVibrantPalette()
         
@@ -595,7 +573,7 @@ class Generator {
         
     }
     //
-    func generateEmptySwatches (palette: CGVibrantPalette, opts: Options)->CGVibrantPalette {
+    func generateEmptySwatches (palette: CGVibrantPalette, opts: Options) -> CGVibrantPalette {
         
         var palette = palette
         //function _generateEmptySwatches (palette: Palette, maxPopulation: number, opts: DefaultGeneratorOptions): void {
@@ -657,14 +635,14 @@ class Generator {
 //  Copyright © 2020 Bryce Dougherty. All rights reserved.
 //
 
-class Image {
-    var image: UIImage
+fileprivate class Image {
+    var image: CGImage
     
-    init(image: UIImage) {
+    init(image: CGImage) {
         self.image = image
     }
     
-    func applyFilter(_ filter: Filter)->[UInt8] {
+    func applyFilter(_ filter: Filter) -> [UInt8] {
         guard let imageData = self.getImageData() else {
             return []
         }
@@ -687,56 +665,11 @@ class Image {
         return imageData
     }
     
-    func getImageData()->[UInt8]? {
+    func getImageData() -> [UInt8]? {
         return Image.makeBytes(from: self.image)
     }
     
-    func scaleTo(size maxSize: CGFloat?, quality: Int) {
-        let width = image.size.width
-        let height = image.size.height
-        
-        var ratio:CGFloat = 1.0
-        if maxSize != nil && maxSize! > 0 {
-            let maxSide = max(width, height)
-            if maxSide > CGFloat(maxSize!) {
-                ratio = CGFloat(maxSize!) / maxSide
-            }
-        } else {
-            ratio = 1 / CGFloat(quality)
-        }
-        if ratio < 1 {
-            self.scale(by: ratio)
-        }
-    }
-    
-    func scale(by scale: CGFloat) {
-        self.image = Image.scaleImage(image: self.image, by: scale)
-    }
-    
-    private static func scaleImage(image: UIImage, by scale: CGFloat)->UIImage {
-        if scale == 1 { return image }
-        
-        let imageRef = image.cgImage!
-        let width = imageRef.width
-        let height = imageRef.height
-        
-        var bounds = CGSize(width: width, height: height)
-        
-        bounds.width = CGFloat(width) * scale
-        bounds.height = CGFloat(height) * scale
-        
-        UIGraphicsBeginImageContext(bounds)
-        image.draw(in: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
-        let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return imageCopy ?? image
-    }
-    
-    private static func makeBytes(from image: UIImage) -> [UInt8]? {
-        guard let cgImage = image.cgImage else {
-            return nil
-        }
+    private static func makeBytes(from cgImage: CGImage) -> [UInt8]? {
         if isCompatibleImage(cgImage) {
             return makeBytesFromCompatibleImage(cgImage)
         } else {
@@ -831,7 +764,7 @@ class Image {
 ///   - green: the green value
 ///   - blue: the blue value
 /// - Returns: the color index
-struct Color {
+fileprivate struct Color {
     var r: UInt8
     var g: UInt8
     var b: UInt8
@@ -842,8 +775,8 @@ struct Color {
         self.b = b
     }
     
-    func makeUIColor() -> UIColor {
-        return UIColor(red: CGFloat(r) / CGFloat(255), green: CGFloat(g) / CGFloat(255), blue: CGFloat(b) / CGFloat(255), alpha: CGFloat(1))
+    func makeCGColor() -> CGColor {
+        return CGColor.cgColor(red: CGFloat(r) / CGFloat(255), green: CGFloat(g) / CGFloat(255), blue: CGFloat(b) / CGFloat(255), alpha: CGFloat(1))
     }
 }
 
@@ -857,7 +790,7 @@ enum ColorChannel {
 
 
 /// Color map.
-class ColorMap {
+fileprivate class ColorMap {
     
     var vboxes = [VBox]()
     
@@ -890,7 +823,7 @@ class ColorMap {
 }
 
 /// Histo (1-d array, giving the number of pixels in each quantized region of color space), or null on error.
-internal func makeHistogramAndVBox(from pixels: [UInt8], quality: Int, ignoreWhite: Bool) -> ([Int], VBox) {
+fileprivate func makeHistogramAndVBox(from pixels: [UInt8], quality: Int, ignoreWhite: Bool) -> ([Int], VBox) {
     var histogram = [Int](repeating: 0, count: histogramSize)
     var rMin = UInt8.max
     var rMax = UInt8.min
@@ -940,11 +873,11 @@ internal func makeHistogramAndVBox(from pixels: [UInt8], quality: Int, ignoreWhi
 //
 
 class Quantizer {
-    typealias quantizer = (_ pixels: [UInt8], _ options: VibrantManager.Options)->[Swatch]
+    typealias quantizer = (_ pixels: [UInt8], _ options: VibrantManager.Options) -> [Swatch]
     
     static let defaultQuantizer: quantizer = Quantizer().quantize
     
-    private func quantize(pixels: [UInt8], options: VibrantManager.Options)->[Swatch] {
+    private func quantize(pixels: [UInt8], options: VibrantManager.Options) -> [Swatch] {
         let quality = options.quality
         let colorcount = options.colorCount
         return Quantizer.vibrantQuantizer(pixels: pixels, quality: quality, colorCount: colorcount)
@@ -973,7 +906,7 @@ class Quantizer {
         }
     }
     
-    static func vibrantQuantizer(pixels: [UInt8], quality: Int, colorCount: Int)->[Swatch] {
+    static func vibrantQuantizer(pixels: [UInt8], quality: Int, colorCount: Int) -> [Swatch] {
         let (hist, vbox) = makeHistogramAndVBox(from: pixels, quality: quality, ignoreWhite: false)
         var pq = [vbox]
         splitBoxes(&pq, Int(fractionByPopulation * Double(colorCount)), hist: hist)
@@ -984,7 +917,7 @@ class Quantizer {
         return generateSwatches(pq)
     }
     
-    private static func generateSwatches (_ pq: [VBox])->[Swatch] {
+    private static func generateSwatches (_ pq: [VBox]) -> [Swatch] {
         return pq.map { (box) in
             let color = box.rgb()
             return Swatch(color, box.getCount())
@@ -1000,7 +933,7 @@ class Quantizer {
 //  Copyright © 2020 Bryce Dougherty. All rights reserved.
 //
 
-internal func applyMedianCut(with histogram: [Int], vbox: VBox) -> [VBox] {
+fileprivate func applyMedianCut(with histogram: [Int], vbox: VBox) -> [VBox] {
     guard vbox.getCount() != 0 else {
         return []
     }
@@ -1062,7 +995,7 @@ internal func applyMedianCut(with histogram: [Int], vbox: VBox) -> [VBox] {
     return cut(by: axis, vbox: vbox, partialSum: partialSum, lookAheadSum: lookAheadSum, total: total)
 }
 
-internal func cut(by axis: ColorChannel, vbox: VBox, partialSum: [Int], lookAheadSum: [Int], total: Int) -> [VBox] {
+fileprivate func cut(by axis: ColorChannel, vbox: VBox, partialSum: [Int], lookAheadSum: [Int], total: Int) -> [VBox] {
     let vboxMin: Int
     let vboxMax: Int
     
@@ -1123,7 +1056,7 @@ internal func cut(by axis: ColorChannel, vbox: VBox, partialSum: [Int], lookAhea
     fatalError("VBox can't be cut")
 }
 
-internal func iterate(over queue: inout [VBox], comparator: (VBox, VBox) -> Bool, target: Int, histogram: [Int]) {
+fileprivate func iterate(over queue: inout [VBox], comparator: (VBox, VBox) -> Bool, target: Int, histogram: [Int]) {
     var color = 1
     
     for _ in 0 ..< maxIterations {
@@ -1152,11 +1085,11 @@ internal func iterate(over queue: inout [VBox], comparator: (VBox, VBox) -> Bool
     }
 }
 
-internal func compareByCount(_ a: VBox, _ b: VBox) -> Bool {
+fileprivate func compareByCount(_ a: VBox, _ b: VBox) -> Bool {
     return a.getCount() < b.getCount()
 }
 
-internal func compareByProduct(_ a: VBox, _ b: VBox) -> Bool {
+fileprivate func compareByProduct(_ a: VBox, _ b: VBox) -> Bool {
     let aCount = a.getCount()
     let bCount = b.getCount()
     let aVolume = a.getVolume()
@@ -1190,7 +1123,7 @@ func apply<T, V>(_ fn: (T) -> V, _ args: T) -> V {
 
 
 
-class VBox {
+fileprivate class VBox {
     
     var rMin: UInt8
     var rMax: UInt8
@@ -1346,44 +1279,34 @@ class VBox {
 class VibrantManager {
     struct Options {
         var colorCount: Int = 64
-        
         var quality: Int = 5
-        
         var quantizer: Quantizer.quantizer = Quantizer.defaultQuantizer
-        
         var generator: Generator.generator = Generator.defaultGenerator
-        
-        var maxDimension: CGFloat?
-        
         var filters: [Filter] = [Filter.defaultFilter]
         
         fileprivate var combinedFilter: Filter?
     }
     
-    static func from( _ src: UIImage)->Builder {
+    fileprivate static func from( _ src: CGImage) -> Builder {
         return Builder(src)
     }
     
     var opts: Options
-    var src: UIImage
+    fileprivate var src: CGImage
     
     private var _palette: CGVibrantPalette?
     var palette: CGVibrantPalette? { _palette }
     
-    init(src: UIImage, opts: Options?) {
+    fileprivate init(src: CGImage, opts: Options?) {
         self.src = src
         self.opts = opts ?? Options()
         self.opts.combinedFilter = Filter.combineFilters(filters: self.opts.filters)
     }
     
-    static func process(image: Image, opts: Options)->CGVibrantPalette {
+    fileprivate static func process(image: Image, opts: Options) -> CGVibrantPalette {
         let quantizer = opts.quantizer
         let generator = opts.generator
         let combinedFilter = opts.combinedFilter!
-        let maxDimension = opts.maxDimension
-        
-        image.scaleTo(size: maxDimension, quality: opts.quality)
-        
         
         let imageData = image.applyFilter(combinedFilter)
         let swatches = quantizer(imageData, opts)
@@ -1401,7 +1324,7 @@ class VibrantManager {
         }
     }
     
-    func getPalette()->CGVibrantPalette {
+    func getPalette() -> CGVibrantPalette {
         let image = Image(image: self.src)
         let palette = VibrantManager.process(image: image, opts: self.opts)
         self._palette = palette
@@ -1456,7 +1379,7 @@ class Swatch: Equatable {
     
     private var _hex: String?
     
-    private var _uiColor: UIColor?
+    private var _CGColor: CGColor?
     
     var r: UInt8 { self._rgb.r }
     
@@ -1483,19 +1406,19 @@ class Swatch: Equatable {
     }
     
     
-    var uiColor: UIColor {
-        if self._uiColor == nil {
+    var CGColor: CGColor {
+        if self._CGColor == nil {
             let rgb = self._rgb
-            self._uiColor = apply(rgbToUIColor, rgb)
+            self._CGColor = apply(rgbToCGColor, rgb)
         }
-        return self._uiColor!
+        return self._CGColor!
     }
     
     var cgColor: CGColor {
-        return self.uiColor.cgColor
+        return self.CGColor
     }
     
-    static func applyFilter(colors: [Swatch], filter: Filter)->[Swatch] {
+    static func applyFilter(colors: [Swatch], filter: Filter) -> [Swatch] {
         var colors = colors
         colors = colors.filter { (swatch) -> Bool in
             let r = swatch.r
@@ -1509,7 +1432,7 @@ class Swatch: Equatable {
     var population: Int { self._population }
     
     
-    func toDict()->[String: Any] {
+    func toDict() -> [String: Any] {
         return [
             "rgb": self.rgb,
             "population": self.population
@@ -1518,7 +1441,7 @@ class Swatch: Equatable {
     
     var toJSON = toDict
     
-    private func getYiq()->Double {
+    private func getYiq() -> Double {
         if self._yiq == nil {
             let (r,g,b) = self._rgb
             let mr = Int(r) * 299
@@ -1530,29 +1453,29 @@ class Swatch: Equatable {
         return self._yiq!
     }
     
-    private var _titleTextColor: UIColor?
+    private var _titleTextColor: CGColor?
     
-    private var _bodyTextColor: UIColor?
+    private var _bodyTextColor: CGColor?
     
-    var titleTextColor: UIColor {
+    var titleTextColor: CGColor {
         if self._titleTextColor == nil {
             self._titleTextColor = self.getYiq() < 200 ? .white : .black
         }
         return self._titleTextColor!
     }
     
-    var bodyTextColor: UIColor {
+    var bodyTextColor: CGColor {
         if self._bodyTextColor == nil {
             self._bodyTextColor = self.getYiq() < 150 ? .white : .black
         }
         return self._bodyTextColor!
     }
     
-    func getTitleTextColor()->UIColor {
+    func getTitleTextColor() -> CGColor {
         return self.titleTextColor
     }
     
-    func getBodyTextColor()->UIColor {
+    func getBodyTextColor() -> CGColor {
         return self.bodyTextColor
     }
     
