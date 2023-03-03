@@ -23,6 +23,15 @@ import MobileCoreServices
 import CoreServices
 #endif
 
+#if canImport(PDFKit)
+import PDFKit
+#if canImport(UIKit)
+import UIKit
+#elseif os(macOS)
+import Cocoa
+#endif
+#endif
+
 extension CGImage {
     /// Cropping mode.
     ///
@@ -81,10 +90,20 @@ extension CGImage {
     /// - Returns: Returns a CGImage filled with the input image.
     public static func cgImage(url: URL) -> CGImage? {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
-            let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+              let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
             return nil
         }
         
+        return image
+    }
+    
+    /// Load a CGImage from an image URL.
+    /// - Parameter url: URL of the image.
+    /// - Returns: Loaded image.
+    public static func loadImage(at url: URL) throws -> CGImage {
+        guard let image = self.cgImage(url: url) else {
+            throw NSError(description: "No image could be loaded from “\(url.path)”.")
+        }
         return image
     }
     
@@ -101,7 +120,48 @@ extension CGImage {
         
         return image.cropping(ratio: ratio, mode: croppingMode)
     }
-    
+}
+
+extension CGImage {
+    /// Load images in PDF document or image file.
+    /// - Parameter url: URL of document of image.
+    /// - Returns: Loaded images.
+    public static func loadImages(at url: URL) throws -> [CGImage] {
+        var outputImages: [CGImage] = []
+        
+#if canImport(PDFKit)
+        if let pdfDocument = PDFDocument(url: url) {
+            for i in 0..<pdfDocument.pageCount {
+                if let page = pdfDocument.page(at: i) {
+                    let pageRect = page.bounds(for: .mediaBox).scaled(by: 6)
+                    let pageImage = page.thumbnail(of: pageRect.size, for: .mediaBox)
+                    if let image = pageImage.cgImage {
+                        outputImages.append(image)
+                    }
+                }
+            }
+        }
+#endif
+        
+        if outputImages.isEmpty {
+            if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
+                let imageSourceCount = CGImageSourceGetCount(imageSource)
+                for i in 0..<imageSourceCount {
+                    if let image = CGImageSourceCreateImageAtIndex(imageSource, i, nil) {
+                        outputImages.append(image)
+                    }
+                }
+            }
+        }
+        
+        if outputImages.isEmpty {
+            throw NSError(description: "No images could be loaded from “\(url.path)”.")
+        }
+        return outputImages
+    }
+}
+
+extension CGImage {
     /// Image file format.
     public enum OutputFormat {
         case jpeg
@@ -186,4 +246,13 @@ extension CGImage {
         try temporaryFile.open()
     }
 }
+
+
+#if os(macOS)
+extension NSImage {
+    var cgImage: CGImage? {
+        return self.cgImage(forProposedRect: nil, context: nil, hints: nil)
+    }
+}
+#endif
 #endif
