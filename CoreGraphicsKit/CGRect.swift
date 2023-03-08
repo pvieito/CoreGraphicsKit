@@ -41,6 +41,13 @@ extension CGRect: CGRatioProvider {
     }
 }
 
+extension CGRect {
+    /// Center of the rect.
+    public var center: CGPoint {
+        return CGPoint(x: self.midX, y: self.midY)
+    }
+}
+
 extension CGRect: CGAreaProvider {
     /// Area of the CGRect.
     public var area: CGFloat {
@@ -49,13 +56,27 @@ extension CGRect: CGAreaProvider {
 }
 
 extension CGRect: CGScalable {
-    /// Return a rect with the size scaled by a floating point factor.
+    /// Return a rect with the size scaled by a floating point factor, maintaining its origin point.
     ///
     /// - Parameter scale: Scale factor.
-    /// - Returns: Rect with the size scaled.
+    /// - Returns: Rect with the size scaled, maintaining its origin point.
     public func scaled(by scale: CGFloat) -> CGRect {
         var rect = self
         rect.size = self.size * scale
         return rect
+    }
+}
+
+extension CGRect {
+    /// Return a rect with the size scaled by a floating point factor, maintaining its center point.
+    ///
+    /// - Parameter scale: Scale factor.
+    /// - Returns: Rect with the size scaled, maintaining its center point.
+    public func scaledFromCenter(by scale: CGFloat) -> CGRect {
+        let scaledSize = self.size.scaled(by: scale)
+        let originX = self.origin.x + (self.size.width - scaledSize.width) / 2
+        let originY = self.origin.y + (self.size.height - scaledSize.height) / 2
+        let scaledOrigin = CGPoint(x: originX, y: originY)
+        return CGRect(origin: scaledOrigin, size: scaledSize.size)
     }
 }

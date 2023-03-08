@@ -19,6 +19,14 @@ class CGRatioTests: XCTestCase {
         XCTAssertEqual(rectB.height, 2.4 * 0.001)
         XCTAssertEqual(rectB.width, 1.2 * 0.001)
         XCTAssertEqual(rectB.ratio, 0.5)
+        XCTAssertEqual(rectB.origin, rectA.origin)
+
+        let rectC = rectA.scaledFromCenter(by: 0.001)
+        XCTAssertEqual(rectC.height, 2.4 * 0.001)
+        XCTAssertEqual(rectC.width, 1.2 * 0.001)
+        XCTAssertEqual(rectC.ratio, 0.5)
+        XCTAssertEqual(rectC.center.x, rectA.center.x, accuracy: 0.000001)
+        XCTAssertEqual(rectC.center.y, rectA.center.y)
 
         let sizeA = CGSize(width: 234, height: 234)
         XCTAssertEqual(sizeA.ratio, 1)
