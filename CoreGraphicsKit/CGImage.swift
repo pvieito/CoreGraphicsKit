@@ -29,6 +29,7 @@ import PDFKit
 import UIKit
 #elseif os(macOS)
 import Cocoa
+import Quartz
 #endif
 #endif
 
