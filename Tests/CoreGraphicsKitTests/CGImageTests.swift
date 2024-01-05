@@ -6,6 +6,7 @@
 //  Copyright © 2024 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if canImport(CoreGraphics)
 import Foundation
 import XCTest
 @testable import CoreGraphicsKit
@@ -80,3 +81,4 @@ class CGImageTests: XCTestCase {
         }
     }
 }
+#endif
