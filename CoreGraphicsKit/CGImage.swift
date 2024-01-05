@@ -64,12 +64,12 @@ extension CGImage {
 }
 
 extension CGImage {
-    public func resizeImage(to targetSize: CGSize, contentMode: CroppingMode) -> CGImage? {
+    public func resized(to targetSize: CGSize, mode: CroppingMode) -> CGImage? {
         var width = targetSize.width
         var height = targetSize.height
         let sourceSize = CGSize(width: self.width, height: self.height)
         
-        switch contentMode {
+        switch mode {
         case .fill:
             let targetLength  = max(targetSize.height, targetSize.width)
             let sourceLength = min(sourceSize.height, sourceSize.width)
