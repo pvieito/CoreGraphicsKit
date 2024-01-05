@@ -42,7 +42,9 @@ extension CGImage {
         case fill
         case fit
     }
-    
+}
+
+extension CGImage {
     /// Crops the image with the given ratio.
     ///
     /// - Parameters:
@@ -61,6 +63,48 @@ extension CGImage {
     }
 }
 
+extension CGImage {
+    func resizeImage(to targetSize: CGSize, contentMode: CroppingMode) -> CGImage? {
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        var width = targetSize.width
+        var height = targetSize.height
+        let sourceSize = CGSize(width: self.width, height: self.height)
+        
+        switch contentMode {
+        case .fill:
+            let targetLength  = max(targetSize.height, targetSize.width)
+            let sourceLength = min(sourceSize.height, sourceSize.width)
+            let fillScale = targetLength / sourceLength
+            width = sourceSize.width * fillScale
+            height = sourceSize.height * fillScale
+            x = (targetSize.width - width) / 2.0
+            y = (targetSize.height - height) / 2.0
+        case .fit:
+            let aspectRatio = sourceSize.ratio
+            if (targetSize.width / aspectRatio) <= targetSize.height {
+                width = targetSize.width
+                height = targetSize.width / aspectRatio
+            } else {
+                height = targetSize.height
+                width = targetSize.height * aspectRatio
+            }
+            x = (targetSize.width - width) / 2.0
+            y = (targetSize.height - height) / 2.0
+        }
+        
+        let bitsPerComponent = self.bitsPerComponent
+        let bytesPerRow = 0
+        let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = self.bitmapInfo.rawValue
+        guard let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else { return nil }
+        
+        context.interpolationQuality = .none
+        context.draw(self, in: CGRect(x: x, y: y, width: width, height: height))
+        
+        return context.makeImage()
+    }
+}
 
 extension CGImage: CGSizeProvider {
     /// The size of the image.
