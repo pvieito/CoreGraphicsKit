@@ -65,8 +65,6 @@ extension CGImage {
 
 extension CGImage {
     func resizeImage(to targetSize: CGSize, contentMode: CroppingMode) -> CGImage? {
-        var x: CGFloat = 0
-        var y: CGFloat = 0
         var width = targetSize.width
         var height = targetSize.height
         let sourceSize = CGSize(width: self.width, height: self.height)
@@ -78,8 +76,6 @@ extension CGImage {
             let fillScale = targetLength / sourceLength
             width = sourceSize.width * fillScale
             height = sourceSize.height * fillScale
-            x = (targetSize.width - width) / 2.0
-            y = (targetSize.height - height) / 2.0
         case .fit:
             let aspectRatio = sourceSize.ratio
             if (targetSize.width / aspectRatio) <= targetSize.height {
@@ -89,10 +85,11 @@ extension CGImage {
                 height = targetSize.height
                 width = targetSize.height * aspectRatio
             }
-            x = (targetSize.width - width) / 2.0
-            y = (targetSize.height - height) / 2.0
         }
         
+        let x = (targetSize.width - width) / 2.0
+        let y = (targetSize.height - height) / 2.0
+
         let bitsPerComponent = self.bitsPerComponent
         let bytesPerRow = 0
         let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
