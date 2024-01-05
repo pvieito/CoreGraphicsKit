@@ -94,11 +94,11 @@ extension CGImage {
         let bytesPerRow = 0
         let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = self.bitmapInfo.rawValue
-        guard let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else { return nil }
-        
+        guard let context = CGContext(data: nil, width: Int(targetSize.width), height: Int(targetSize.height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else { return nil }
+
         context.interpolationQuality = .none
         context.draw(self, in: CGRect(x: x, y: y, width: width, height: height))
-        
+
         return context.makeImage()
     }
 }
