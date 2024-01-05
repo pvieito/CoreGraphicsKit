@@ -103,6 +103,54 @@ extension CGImage {
     }
 }
 
+extension CGImage {
+    var hasAlphaChannel: Bool {
+        // Check if the image has an alpha component
+        guard let alphaInfo = CGImageAlphaInfo(rawValue: alphaInfo.rawValue & CGBitmapInfo.alphaInfoMask.rawValue) else {
+            return false
+        }
+        switch alphaInfo {
+        case .none, .noneSkipLast, .noneSkipFirst:
+            // These formats have no alpha channel
+            return false
+        default:
+            break
+        }
+        return true
+    }
+
+    var hasAnyTransparency: Bool {
+        guard self.hasAlphaChannel else {
+            return false
+        }
+
+        let width = self.width
+        let height = self.height
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bytesPerPixel = 4
+        let bitsPerComponent = 8
+        let bytesPerRow = bytesPerPixel * width
+        var rawData = [UInt8](repeating: 0, count: height * bytesPerRow)
+
+        guard let context = CGContext(data: &rawData, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) else {
+            return false
+        }
+
+        context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        for y in 0..<height {
+            for x in 0..<width {
+                let byteIndex = (bytesPerRow * y) + x * bytesPerPixel
+                let alpha = rawData[byteIndex + 3] // Alpha component is the last byte in RGBA
+                if alpha < 255 {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+}
+
+
 extension CGImage: CGSizeProvider {
     /// The size of the image.
     public var size: CGSize {
