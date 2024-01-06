@@ -65,7 +65,7 @@ extension CGImage {
 
 extension CGImage {
     public func cgContextForImage(data: UnsafeMutableRawPointer? = nil, size: CGSize? = nil, width: Int? = nil, height: Int? = nil, bitsPerComponent: Int? = nil, bytesPerRow: Int? = nil, space: CGColorSpace? = nil, bitmapInfo: UInt32? = nil) -> CGContext? {
-        return CGContext.cgContext(data: nil, width: width ?? self.width, height: height ?? self.height, bitsPerComponent: bitsPerComponent ?? self.bitsPerComponent, bytesPerRow: bytesPerRow, space: space ?? self.colorSpace, bitmapInfo: bitmapInfo)
+        return CGContext.cgContext(data: data, width: width ?? self.width, height: height ?? self.height, bitsPerComponent: bitsPerComponent ?? self.bitsPerComponent, bytesPerRow: bytesPerRow, space: space ?? self.colorSpace, bitmapInfo: bitmapInfo)
     }
     
     public func cgContextForImage(data: UnsafeMutableRawPointer? = nil, width: CGFloat, height: CGFloat, bitsPerComponent: Int? = nil, bytesPerRow: Int? = nil, space: CGColorSpace? = nil, bitmapInfo: UInt32? = nil) -> CGContext? {

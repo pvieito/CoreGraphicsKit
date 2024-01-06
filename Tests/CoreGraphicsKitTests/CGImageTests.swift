@@ -23,13 +23,9 @@ class CGImageTests: XCTestCase {
     }
 
     func createTestImage(red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 1) -> CGImage {
-        let width = Int(Self.testImageSize.width)
-        let height = Int(Self.testImageSize.height)
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue
-        let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 4 * width, space: colorSpace, bitmapInfo: bitmapInfo)!
+        let context = CGContext.cgContext(size: Self.testImageSize)!
         context.setFillColor(CGColor(red: red, green: green, blue: blue, alpha: alpha))
-        context.fill(CGRect(x: 0, y: 0, width: width, height: height))
+        context.fill(CGRect(sizeFromZero: Self.testImageSize))
         let image = context.makeImage()
         return image!
     }
@@ -58,9 +54,22 @@ class CGImageTests: XCTestCase {
         
         for targetSize in targetSizes {
             for mode in modes {
-                let resizedImage = try XCTUnwrap(testWhiteImage.resized(to: targetSize, mode: mode))
-                XCTAssertEqual(resizedImage.width, Int(targetSize.width))
-                XCTAssertEqual(resizedImage.height, Int(targetSize.height))
+                var resizedImage = try XCTUnwrap(testWhiteImage.resized(to: targetSize))
+                XCTAssertEqual(resizedImage.size, targetSize)
+                XCTAssertFalse(resizedImage.hasAnyTransparency)
+
+                resizedImage = try XCTUnwrap(testWhiteImage.resized(height: targetSize.height))
+                XCTAssertEqual(resizedImage.size.height, targetSize.size.height)
+                XCTAssertEqual(resizedImage.size.ratio, testWhiteImage.size.ratio)
+                XCTAssertFalse(resizedImage.hasAnyTransparency)
+
+                resizedImage = try XCTUnwrap(testWhiteImage.resized(width: targetSize.width))
+                XCTAssertEqual(resizedImage.size.width, targetSize.size.width)
+                XCTAssertEqual(resizedImage.size.ratio, testWhiteImage.size.ratio)
+                XCTAssertFalse(resizedImage.hasAnyTransparency)
+
+                resizedImage = try XCTUnwrap(testWhiteImage.resized(to: targetSize, mode: mode))
+                XCTAssertEqual(resizedImage.size, targetSize)
                 
                 switch mode {
                 case .fill:
