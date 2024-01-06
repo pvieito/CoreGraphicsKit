@@ -80,5 +80,45 @@ class CGImageTests: XCTestCase {
             }
         }
     }
+    
+    func testAddingTransparentBorder() throws {
+        let originalImage = self.testWhiteImage!
+        XCTAssertFalse(originalImage.hasAnyTransparency)
+        
+        let insetsList = [
+            CGRect.EdgeInsets(top: 1, left: 0, bottom: 0, right: 0),
+            CGRect.EdgeInsets(top: 0, left: 1, bottom: 0, right: 0),
+            CGRect.EdgeInsets(top: 1, left: 0, bottom: 1, right: 0),
+            CGRect.EdgeInsets(top: 0, left: 0, bottom: 0, right: 1),
+        ]
+        for insets in insetsList {
+            let image = originalImage.addingTransparentBorder(insets: insets)!
+            XCTAssertTrue(image.hasAnyTransparency)
+        }
+        
+        let image = originalImage.addingTransparentBorder(insets: CGRect.EdgeInsets())!
+        XCTAssertFalse(image.hasAnyTransparency)
+    }
+    
+    func testWithBackgroundColor() throws {
+        let originalImage = self.testTransparentImage!
+        XCTAssertTrue(originalImage.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor()!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor(.red)!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor(.blue)!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor(.green)!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor(.gray)!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor(.black)!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withBackgroundColor(.white)!.hasAnyTransparency)
+    }
+    
+    func testWithRoundedCorners() throws {
+        let originalImage = self.testWhiteImage!
+        XCTAssertFalse(originalImage.hasAnyTransparency)
+        XCTAssertTrue(originalImage.withRoundedCorners()!.hasAnyTransparency)
+        XCTAssertTrue(originalImage.withRoundedCorners(radius: 1)!.hasAnyTransparency)
+        XCTAssertTrue(originalImage.withRoundedCorners(radius: 20)!.hasAnyTransparency)
+        XCTAssertFalse(originalImage.withRoundedCorners(radius: 0)!.hasAnyTransparency)
+    }
 }
 #endif

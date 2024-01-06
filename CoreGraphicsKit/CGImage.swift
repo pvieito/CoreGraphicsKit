@@ -104,6 +104,46 @@ extension CGImage {
 }
 
 extension CGImage {
+    public func addingTransparentBorder(insets: CGRect.EdgeInsets) -> CGImage? {
+        let newWidth = width + Int(insets.left + insets.right)
+        let newHeight = height + Int(insets.top + insets.bottom)
+        guard let colorSpace = colorSpace, let context = CGContext(data: nil, width: newWidth, height: newHeight, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: alphaInfo.rawValue) else {
+            return nil
+        }
+        context.draw(self, in: CGRect(x: Int(insets.left), y: Int(insets.top), width: width, height: height))
+        return context.makeImage()
+    }
+}
+
+extension CGImage {
+    public func withBackgroundColor(_ color: CGColor = .white) -> CGImage? {
+        guard let colorSpace = colorSpace, let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: alphaInfo.rawValue) else {
+            return nil
+        }
+        context.setFillColor(color)
+        context.fill(CGRect(x: 0, y: 0, width: width, height: height))
+        context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        return context.makeImage()
+    }
+}
+
+extension CGImage {
+    public func withRoundedCorners(radius: CGFloat? = nil) -> CGImage? {
+        let maxRadius = CGFloat(min(width, height)) / 2
+        let cornerRadius = min(radius ?? maxRadius, maxRadius)
+        guard let colorSpace = colorSpace, let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: alphaInfo.rawValue) else {
+            return nil
+        }
+        let rect = CGRect(x: 0, y: 0, width: width, height: height)
+        let path = CGPath(roundedRect: rect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
+        context.addPath(path)
+        context.clip()
+        context.draw(self, in: rect)
+        return context.makeImage()
+    }
+}
+
+extension CGImage {
     var hasAlphaChannel: Bool {
         // Check if the image has an alpha component
         guard let alphaInfo = CGImageAlphaInfo(rawValue: alphaInfo.rawValue & CGBitmapInfo.alphaInfoMask.rawValue) else {
@@ -321,6 +361,10 @@ extension CGImage {
         try self.write(to: temporaryImageURL, format: format)
         
         return temporaryImageURL
+    }
+    
+    public func temporaryPNG() throws -> URL {
+        return try self.temporaryFile(format: .png)
     }
     
     @available(iOSApplicationExtension, unavailable)
