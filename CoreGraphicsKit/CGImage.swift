@@ -64,30 +64,38 @@ extension CGImage {
 }
 
 extension CGImage {
-    public func resized(to size: CGSize) -> CGImage? {
-        let width = Int(size.width)
-        let height = Int(size.height)
+    public func cgContextForImage(data: UnsafeMutableRawPointer? = nil, size: CGSize? = nil, width: Int? = nil, height: Int? = nil, bitsPerComponent: Int? = nil, bytesPerRow: Int? = nil, space: CGColorSpace? = nil, bitmapInfo: UInt32? = nil) -> CGContext? {
+        return CGContext.cgContext(data: nil, width: width ?? self.width, height: height ?? self.height, bitsPerComponent: bitsPerComponent ?? self.bitsPerComponent, bytesPerRow: bytesPerRow, space: space ?? self.colorSpace, bitmapInfo: bitmapInfo)
+    }
+    
+    public func cgContextForImage(data: UnsafeMutableRawPointer? = nil, width: CGFloat, height: CGFloat, bitsPerComponent: Int? = nil, bytesPerRow: Int? = nil, space: CGColorSpace? = nil, bitmapInfo: UInt32? = nil) -> CGContext? {
+        return self.cgContextForImage(data: data, width: Int(width), height: Int(height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: space, bitmapInfo: bitmapInfo)
+    }
+    
+    public func cgContextForImage(data: UnsafeMutableRawPointer? = nil, size: CGSize, bitsPerComponent: Int? = nil, bytesPerRow: Int? = nil, space: CGColorSpace? = nil, bitmapInfo: UInt32? = nil) -> CGContext? {
+        return self.cgContextForImage(data: data, width: size.width, height: size.height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: space, bitmapInfo: bitmapInfo)
+    }
+}
 
-        let bytesPerRow = 0
-        let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
-        guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
+extension CGImage {
+    public func resized(to size: CGSize) -> CGImage? {
+        guard let context = self.cgContextForImage(size: size) else {
             return nil
         }
-
         context.interpolationQuality = .high
-        context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        context.draw(self, in: CGRect(x: .zero, y: .zero, width: context.width, height: context.height))
         return context.makeImage()
     }
 
     public func resized(height: CGFloat) -> CGImage? {
         let sizeFactor = height / CGFloat(self.height)
-        let newSize = CGSize(width: CGFloat(self.width), height: CGFloat(self.height)).scaled(by: sizeFactor)
+        let newSize = CGSize(width: self.width, height: self.height).scaled(by: sizeFactor)
         return self.resized(to: newSize)
     }
 
     public func resized(width: CGFloat) -> CGImage? {
         let sizeFactor = width / CGFloat(self.width)
-        let newSize = CGSize(width: CGFloat(self.width), height: CGFloat(self.height)).scaled(by: sizeFactor)
+        let newSize = CGSize(width: self.width, height: self.height).scaled(by: sizeFactor)
         return self.resized(to: newSize)
     }
 }
@@ -119,9 +127,9 @@ extension CGImage {
         let x = (targetSize.width - width) / 2.0
         let y = (targetSize.height - height) / 2.0
 
-        let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
-        guard let context = CGContext(data: nil, width: Int(targetSize.width), height: Int(targetSize.height), bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else { return nil }
-
+        guard let context = self.cgContextForImage(size: targetSize) else {
+            return nil
+        }
         context.interpolationQuality = .none
         context.draw(self, in: CGRect(x: x, y: y, width: width, height: height))
 
@@ -133,7 +141,8 @@ extension CGImage {
     public func addingTransparentBorder(insets: CGRect.EdgeInsets) -> CGImage? {
         let newWidth = width + Int(insets.left + insets.right)
         let newHeight = height + Int(insets.top + insets.bottom)
-        guard let colorSpace = colorSpace, let context = CGContext(data: nil, width: newWidth, height: newHeight, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: alphaInfo.rawValue) else {
+        
+        guard let context = self.cgContextForImage(width: newWidth, height: newHeight) else {
             return nil
         }
         context.draw(self, in: CGRect(x: Int(insets.left), y: Int(insets.top), width: width, height: height))
@@ -143,12 +152,12 @@ extension CGImage {
 
 extension CGImage {
     public func withBackgroundColor(_ color: CGColor = .white) -> CGImage? {
-        guard let colorSpace = colorSpace, let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: alphaInfo.rawValue) else {
+        guard let context = self.cgContextForImage() else {
             return nil
         }
         context.setFillColor(color)
-        context.fill(CGRect(x: 0, y: 0, width: width, height: height))
-        context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        context.fill(CGRect(intWidth: width, intHeight: height))
+        context.draw(self, in: CGRect(intWidth: width, intHeight: height))
         return context.makeImage()
     }
 }
@@ -157,10 +166,10 @@ extension CGImage {
     public func withRoundedCorners(radius: CGFloat? = nil) -> CGImage? {
         let maxRadius = CGFloat(min(width, height)) / 2
         let cornerRadius = min(radius ?? maxRadius, maxRadius)
-        guard let colorSpace = colorSpace, let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: alphaInfo.rawValue) else {
+        guard let context = self.cgContextForImage() else {
             return nil
         }
-        let rect = CGRect(x: 0, y: 0, width: width, height: height)
+        let rect = CGRect(intWidth: width, intHeight: height)
         let path = CGPath(roundedRect: rect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil)
         context.addPath(path)
         context.clip()
@@ -190,19 +199,16 @@ extension CGImage {
             return false
         }
 
-        let width = self.width
-        let height = self.height
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bytesPerPixel = 4
         let bitsPerComponent = 8
         let bytesPerRow = bytesPerPixel * width
         var rawData = [UInt8](repeating: 0, count: height * bytesPerRow)
-
-        guard let context = CGContext(data: &rawData, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) else {
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue
+        guard let context = self.cgContextForImage(data: &rawData, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, bitmapInfo: bitmapInfo) else {
             return false
         }
-
-        context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        context.draw(self, in: CGRect(intWidth: width, intHeight: height))
         for y in 0..<height {
             for x in 0..<width {
                 let byteIndex = (bytesPerRow * y) + x * bytesPerPixel
@@ -215,7 +221,6 @@ extension CGImage {
         return false
     }
 }
-
 
 extension CGImage: CGSizeProvider {
     /// The size of the image.
@@ -275,6 +280,20 @@ extension CGImage {
         }
         
         return image.cropping(ratio: ratio, mode: croppingMode)
+    }
+}
+extension CGImage {
+    public static func cgImage(data: Data) -> CGImage? {
+        guard let dataProvider = CGDataProvider(data: data as CFData) else { return nil }
+        guard let imageSource = CGImageSourceCreateWithDataProvider(dataProvider, [:] as CFDictionary) else { return nil }
+        return CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
+    }
+
+    public static func loadImage(from data: Data) throws -> CGImage {
+        guard let image = self.cgImage(data: data) else {
+            throw NSError(description: "No image could be loaded from data.")
+        }
+        return image
     }
 }
 
@@ -388,11 +407,7 @@ extension CGImage {
         
         return temporaryImageURL
     }
-    
-    public func temporaryPNG() throws -> URL {
-        return try self.temporaryFile(format: .png)
-    }
-    
+        
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(watchOSApplicationExtension, unavailable)
@@ -404,6 +419,20 @@ extension CGImage {
     public func open(format: OutputFormat = .jpeg) throws {
         let temporaryFile = try self.temporaryFile()
         try temporaryFile.open()
+    }
+}
+
+extension CGImage {
+    public func pngData() -> Data? {
+        let data = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(data, kUTTypePNG, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, self, nil)
+        guard CGImageDestinationFinalize(destination) else { return nil }
+        return data as Data
+    }
+    
+    public func temporaryPNG() throws -> URL {
+        return try self.temporaryFile(format: .png)
     }
 }
 

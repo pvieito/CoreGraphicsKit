@@ -13,7 +13,7 @@ import CoreGraphics
 #endif
 
 extension CGRect {
-    /// Initializes a CGRect with a given size box centered on a bouding box.
+    /// Initializes a CGRect with a given size box centered on a bonding box.
     ///
     /// - Parameters:
     ///   - centeredSize: Size of the new CGRect.
@@ -23,6 +23,22 @@ extension CGRect {
         let y = boundingBox.height / 2 + boundingBox.origin.y - size.height / 2
         let rectOrigin = CGPoint(x: x, y: y)
         self.init(origin: rectOrigin, size: size)
+    }
+    
+    public init(sizeFromZero: CGSize) {
+        self.init(origin: .zero, size: sizeFromZero)
+    }
+    
+    public init(width: CGFloat, height: CGFloat) {
+        self.init(origin: .zero, size: CGSize(width: width, height: height))
+    }
+    
+    public init(intWidth: Int, intHeight: Int) {
+        self.init(width: CGFloat(intWidth), height: CGFloat(intHeight))
+    }
+    
+    public init(intX: Int, intY: Int, intWidth: Int, intHeight: Int) {
+        self.init(x: CGFloat(intX), y: CGFloat(intY), width: CGFloat(intWidth), height: CGFloat(intHeight))
     }
 }
 

@@ -13,6 +13,12 @@ import CoreGraphics
 #endif
 
 extension CGSize {
+    public init(intWidth: Int, intHeight: Int) {
+        self.init(width: CGFloat(intWidth), height: CGFloat(intHeight))
+    }
+}
+
+extension CGSize {
     /// Initializes a CGSize with a given ratio and width.
     ///
     /// - Parameters:
