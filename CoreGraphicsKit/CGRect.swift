@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if canImport(Darwin)
+#if canImport(CoreGraphics)
 import CoreGraphics
 #endif
 
@@ -78,21 +78,5 @@ extension CGRect {
         let originY = self.origin.y + (self.size.height - scaledSize.height) / 2
         let scaledOrigin = CGPoint(x: originX, y: originY)
         return CGRect(origin: scaledOrigin, size: scaledSize.size)
-    }
-}
-
-extension CGRect {
-    public struct EdgeInsets {
-        public var top: CGFloat
-        public var left: CGFloat
-        public var bottom: CGFloat
-        public var right: CGFloat
-
-        public init(top: CGFloat = .zero, left: CGFloat = .zero, bottom: CGFloat = .zero, right: CGFloat = .zero) {
-            self.top = top
-            self.left = left
-            self.bottom = bottom
-            self.right = right
-        }
     }
 }
