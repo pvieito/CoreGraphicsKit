@@ -64,6 +64,36 @@ extension CGImage {
 }
 
 extension CGImage {
+    public func resized(to size: CGSize) -> CGImage? {
+        let width = Int(size.width)
+        let height = Int(size.height)
+
+        let bytesPerRow = 0
+        let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
+        guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
+            return nil
+        }
+
+        context.interpolationQuality = .high
+        context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        return context.makeImage()
+    }
+
+    public func resized(height: CGFloat) -> CGImage? {
+        let sizeFactor = height / CGFloat(self.height)
+        let newSize = CGSize(width: CGFloat(self.width), height: CGFloat(self.height)).scaled(by: sizeFactor)
+        return self.resized(to: newSize)
+    }
+
+    public func resized(width: CGFloat) -> CGImage? {
+        let sizeFactor = width / CGFloat(self.width)
+        let newSize = CGSize(width: CGFloat(self.width), height: CGFloat(self.height)).scaled(by: sizeFactor)
+        return self.resized(to: newSize)
+    }
+}
+
+
+extension CGImage {
     public func resized(to targetSize: CGSize, mode: CroppingMode) -> CGImage? {
         var width = targetSize.width
         var height = targetSize.height
@@ -90,11 +120,8 @@ extension CGImage {
         let x = (targetSize.width - width) / 2.0
         let y = (targetSize.height - height) / 2.0
 
-        let bitsPerComponent = self.bitsPerComponent
-        let bytesPerRow = 0
         let colorSpace = self.colorSpace ?? CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = self.bitmapInfo.rawValue
-        guard let context = CGContext(data: nil, width: Int(targetSize.width), height: Int(targetSize.height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else { return nil }
+        guard let context = CGContext(data: nil, width: Int(targetSize.width), height: Int(targetSize.height), bitsPerComponent: bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else { return nil }
 
         context.interpolationQuality = .none
         context.draw(self, in: CGRect(x: x, y: y, width: width, height: height))
