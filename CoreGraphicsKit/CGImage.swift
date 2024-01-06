@@ -92,7 +92,6 @@ extension CGImage {
     }
 }
 
-
 extension CGImage {
     public func resized(to targetSize: CGSize, mode: CroppingMode) -> CGImage? {
         var width = targetSize.width
