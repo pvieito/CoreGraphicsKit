@@ -339,6 +339,8 @@ extension CGImage {
 extension CGImage {
     /// Image file format.
     public enum OutputFormat {
+        public static let `default`: Self = .png
+        
         case jpeg
         case png
         case bmp
@@ -370,8 +372,8 @@ extension CGImage {
     ///
     /// - Parameters:
     ///   - url: Destination URL.
-    ///   - format: Destination format. JPEG by default.
-    public func write(to url: URL, format: OutputFormat = .jpeg) throws {
+    ///   - format: Destination format.
+    public func write(to url: URL, format: OutputFormat = .default) throws {
         try self.write(to: url, format: format.utiType)
     }
     
@@ -397,8 +399,8 @@ extension CGImage {
     /// Note: Uses the FoundationKit `FileManger.autocleanedTemporaryDirectory` to temporary store the generated image.
     ///
     /// - Parameters:
-    ///   - format: Destination format. JPEG by default.
-    public func temporaryFile(format: OutputFormat = .jpeg) throws -> URL {
+    ///   - format: Destination format.
+    public func temporaryFile(format: OutputFormat = .default) throws -> URL {
         let imageUUID = UUID()
         let temporaryImageURL = FileManager.default.autocleanedTemporaryDirectory
             .appendingPathComponent(imageUUID.uuidString)
@@ -415,9 +417,9 @@ extension CGImage {
     /// Renders the image to a temporary location and and opens it.
     ///
     /// - Parameters:
-    ///   - format: Destination format. JPEG by default.
-    public func open(format: OutputFormat = .jpeg) throws {
-        let temporaryFile = try self.temporaryFile()
+    ///   - format: Destination format.
+    public func open(format: OutputFormat = .default) throws {
+        let temporaryFile = try self.temporaryFile(format: format)
         try temporaryFile.open()
     }
 }
