@@ -390,7 +390,7 @@ extension CGImage {
         CGImageDestinationAddImage(destination, self, nil)
         
         guard CGImageDestinationFinalize(destination) else {
-            throw CGError.OutputError.errorWrittingOutput
+            throw CGError.OutputError.errorWritingOutput
         }
     }
     

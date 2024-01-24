@@ -14,7 +14,7 @@ extension CGError {
     public enum OutputError: LocalizedError {
         case imageNotGenerated
         case destinationNotAvailable
-        case errorWrittingOutput
+        case errorWritingOutput
 
         public var errorDescription: String? {
             switch self {
@@ -22,8 +22,8 @@ extension CGError {
                 return "The image of the CGContext did not render successfully."
             case .destinationNotAvailable:
                 return "The image destination is not available."
-            case .errorWrittingOutput:
-                return "Error writting output image to the destination."
+            case .errorWritingOutput:
+                return "Error writing output image to the destination."
             }
         }
     }

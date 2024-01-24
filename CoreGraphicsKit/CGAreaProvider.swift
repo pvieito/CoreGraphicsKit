@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if canImport(Darwin)
+#if canImport(CoreGraphics)
 import CoreGraphics
 #endif
 
