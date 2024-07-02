@@ -12,7 +12,7 @@ import CoreGraphics
 
 extension CGContext {
     public static func cgContext(data: UnsafeMutableRawPointer? = nil, width: Int, height: Int, bitsPerComponent: Int? = nil, bytesPerRow: Int? = nil, space: CGColorSpace? = nil, bitmapInfo: UInt32? = nil) -> CGContext? {
-        let space = space ?? CGColorSpaceCreateDeviceRGB()
+        let space = space?.supportsOutput == true ? space! : CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = bitmapInfo ?? CGImageAlphaInfo.premultipliedLast.rawValue
         return CGContext(data: data, width: width, height: height, bitsPerComponent: bitsPerComponent ?? 8, bytesPerRow: bytesPerRow ?? 0, space: space, bitmapInfo: bitmapInfo)
     }
