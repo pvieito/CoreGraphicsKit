@@ -400,13 +400,13 @@ extension CGImage {
     ///
     /// - Parameters:
     ///   - format: Destination format.
-    public func temporaryFile(format: OutputFormat = .default) throws -> URL {
-        let imageUUID = UUID()
-        let temporaryImageURL = FileManager.default.autocleanedTemporaryDirectory
-            .appendingPathComponent(imageUUID.uuidString)
-            .appendingPathExtension(format.pathExtension)
+    public func temporaryFile(format: OutputFormat = .default, autocleaned: Bool = true) throws -> URL {
+        let temporaryImageURL = FileManager.default.temporaryRandomFileURL(
+            pathExtension: format.pathExtension,
+            autocleaned: autocleaned,
+            directoryName: "\(Bundle.currentBundleIdentifier).CGImage.TemporaryFile",
+            randomDirectory: false)
         try self.write(to: temporaryImageURL, format: format)
-        
         return temporaryImageURL
     }
         
@@ -433,8 +433,8 @@ extension CGImage {
         return data as Data
     }
     
-    public func temporaryPNG() throws -> URL {
-        return try self.temporaryFile(format: .png)
+    public func temporaryPNG(autocleaned: Bool = true) throws -> URL {
+        return try self.temporaryFile(format: .png, autocleaned: autocleaned)
     }
 }
 
