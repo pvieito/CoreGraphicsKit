@@ -23,14 +23,17 @@ import MobileCoreServices
 import CoreServices
 #endif
 
-#if canImport(PDFKit)
+#if canImport(PDFKit) && !os(tvOS)
 import PDFKit
+#endif
+
 #if canImport(UIKit)
 import UIKit
-#elseif os(macOS)
+#endif
+
+#if os(macOS)
 import Cocoa
 import Quartz
-#endif
 #endif
 
 extension CGImage {
@@ -304,7 +307,7 @@ extension CGImage {
     public static func loadImages(at url: URL) throws -> [CGImage] {
         var outputImages: [CGImage] = []
         
-#if canImport(PDFKit)
+#if canImport(PDFKit) && !os(tvOS)
         if let pdfDocument = PDFDocument(url: url) {
             for i in 0..<pdfDocument.pageCount {
                 if let page = pdfDocument.page(at: i) {
